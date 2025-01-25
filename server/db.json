@@ -1,6 +1,7 @@
 {
   "hotels": [
     {
+      
       "id": "6017649",
       "listing_url": "https://www.airbnb.com/rooms/6017649",
       "scrape_id": "20170402075052",
@@ -951,7 +952,7 @@
         "height": 426,
         "url": "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/airbnb-listings/files/089848e03bb2b3b495ad7dc8f7640af4"
       },
-      "xl_picture_url": "https://a0.muscache.com/im/pictures/440cb88b-6a93-48bc-b87f-78675ea40c60.jpg?aki_policy=x_large",
+      "xl_picture_url": "https://uploadkon.ir/uploads/fc7225_25photo-2025-01-25-03-09-41.jpg",
       "host_id": "14694975",
       "host_url": "https://www.airbnb.com/users/show/14694975",
       "host_name": "Robin&Thaís",
@@ -1221,7 +1222,7 @@
         "height": 426,
         "url": "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/airbnb-listings/files/2e202e79e908a132d144cc32168fcfc3"
       },
-      "xl_picture_url": null,
+      "xl_picture_url": "https://uploadkon.ir/uploads/b39025_25photo-2025-01-25-03-13-33.jpg",
       "host_id": "40565986",
       "host_url": "https://www.airbnb.com/users/show/40565986",
       "host_name": "Claudia",
