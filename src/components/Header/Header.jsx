@@ -5,10 +5,13 @@ import { useOutSideClick } from "../../hook/useOutsideClick";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
-import { format, compareAsc } from "date-fns"
+import { format, compareAsc } from "date-fns";
+import { createSearchParams, useNavigate } from "react-router-dom";
 function Header() {
   const [openOption, setOpenOption] = useState(false);
   const [openDate, setOpenDate] = useState(false);
+  const [destinity, setDestinity] = useState("");
+  const navigate = useNavigate()
   const [option, setOption] = useState({
     adult: 1,
     children: 0,
@@ -29,6 +32,18 @@ function Header() {
       };
     });
   };
+  const handleSearchParams = () => {
+    const encoded = createSearchParams({
+      option: JSON.stringify(option),
+      date: JSON.stringify(date),
+      destinity,
+    });
+    navigate({
+      pathname:"/hotels",
+      search:encoded.toString()
+    })
+
+  };
   return (
     <div className="header">
       <div className="headerSearch">
@@ -44,7 +59,10 @@ function Header() {
         <div className="headerSearchItem">
           <HiCalendar className="dateIcon" />
           <div onClick={() => setOpenDate(!openDate)} className="dateDropDown">
-            {`${format(date[0].startDate , "MM/dd/yyyy")} to ${format(date[0].endDate,"MM/dd/yyyy")}`}
+            {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
+              date[0].endDate,
+              "MM/dd/yyyy"
+            )}`}
           </div>
           {openDate && (
             <DateRange
@@ -71,7 +89,7 @@ function Header() {
           <span className="headerSearchItem seperator"></span>
         </div>
         <div className="headerSearchItem">
-          <button className="headerSearchBtn">
+          <button className="headerSearchBtn" onClick={handleSearchParams}>
             <HiSearch className="headerIcon" />
           </button>
         </div>
