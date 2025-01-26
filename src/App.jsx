@@ -5,10 +5,11 @@ import { Routes, Route } from "react-router-dom";
 import LayOut from "./components/AppLayOut/LayOut";
 import Hotels from "./components/Hotels/Hotels";
 import Toaster from "react-hot-toast";
+import HotelsProvider from "./Context/HotelsProvider";
 
 function App() {
   return (
-    <div>
+    <HotelsProvider>
       <Toaster />
       <Header />
       <Routes>
@@ -16,10 +17,9 @@ function App() {
         <Route path="/hotels" element={<LayOut />}>
           <Route index element={<Hotels />} />
           <Route path=":id" element={<div>Single</div>} />
-          
         </Route>
       </Routes>
-    </div>
+    </HotelsProvider>
   );
 }
 
