@@ -8,13 +8,12 @@ import { DateRange } from "react-date-range";
 import { format, compareAsc } from "date-fns";
 import { createSearchParams, useNavigate } from "react-router-dom";
 
-
-
 function Header() {
   const [openOption, setOpenOption] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [destination, setDestination] = useState("");
-  const navigate = useNavigate()
+  // const [openDate ,setOpenDate]=useState(false)
+  const navigate = useNavigate();
   const [option, setOption] = useState({
     adult: 1,
     children: 0,
@@ -42,28 +41,31 @@ function Header() {
       destination,
     });
     navigate({
-      pathname:"/hotels",
-      search:encoded.toString()
-    })
-
+      pathname: "/hotels",
+      search: encoded.toString(),
+    });
   };
+  const dateRef = useRef();
+  useOutSideClick(dateRef, () => setOpenDate(false), "dateOpener");
   return (
     <div className="header">
       <div className="headerSearch">
         <div className="headerSearchItem">
           <MdLocationOn className="locationIcon" />
+          
           <input
             type="text"
             placeholder="Where to go ?"
             className="headerSearchInput"
             value={destination}
-            onChange={(e)=>setDestination(e.target.value||"")}
+            onChange={(e) => setDestination(e.target.value || "")}
           />
           <span className="headerSearchItem seperator"></span>
         </div>
-        <div className="headerSearchItem">
+
+        <div className="headerSearchItem dateOpener" ref={dateRef} onClick={() => setOpenDate(!openDate)}>
           <HiCalendar className="dateIcon" />
-          <div onClick={() => setOpenDate(!openDate)} className="dateDropDown">
+          <div className="dateDropDown">
             {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
               date[0].endDate,
               "MM/dd/yyyy"

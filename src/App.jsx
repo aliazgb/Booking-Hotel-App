@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import LayOut from "./components/AppLayOut/LayOut";
 import Hotels from "./components/Hotels/Hotels";
 import Toaster from "react-hot-toast";
+
 function App() {
   return (
     <div>
@@ -15,6 +16,7 @@ function App() {
         <Route path="/hotels" element={<LayOut />}>
           <Route index element={<Hotels />} />
           <Route path=":id" element={<div>Single</div>} />
+          
         </Route>
       </Routes>
     </div>

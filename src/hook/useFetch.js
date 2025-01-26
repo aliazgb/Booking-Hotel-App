@@ -12,7 +12,6 @@ export default function useFetch(url, query = "") {
         setIsLoading(true);
         const { data } = await axios.get(`${url}?${query}`);
         setData(data);
-        console.log(`${url}?${query}`);
       } catch (err) {
         setData([]);
         toast.error(err?.message);

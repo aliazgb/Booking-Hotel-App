@@ -4,7 +4,7 @@ export function useOutSideClick(ref, cb,exceptionId) {
   useEffect(() => {
     function handleClick(e) {
       if (
-        ref.current &&
+        ref.current && 
         !ref.current.contains(e.target) &&
         e.target.id !== exceptionId
       ) {
