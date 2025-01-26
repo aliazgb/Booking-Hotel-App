@@ -7,10 +7,13 @@ import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
 import { format, compareAsc } from "date-fns";
 import { createSearchParams, useNavigate } from "react-router-dom";
+
+
+
 function Header() {
   const [openOption, setOpenOption] = useState(false);
   const [openDate, setOpenDate] = useState(false);
-  const [destinity, setDestinity] = useState("");
+  const [destination, setDestination] = useState("");
   const navigate = useNavigate()
   const [option, setOption] = useState({
     adult: 1,
@@ -36,7 +39,7 @@ function Header() {
     const encoded = createSearchParams({
       option: JSON.stringify(option),
       date: JSON.stringify(date),
-      destinity,
+      destination,
     });
     navigate({
       pathname:"/hotels",
@@ -53,6 +56,8 @@ function Header() {
             type="text"
             placeholder="Where to go ?"
             className="headerSearchInput"
+            value={destination}
+            onChange={(e)=>setDestination(e.target.value||"")}
           />
           <span className="headerSearchItem seperator"></span>
         </div>
