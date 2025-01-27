@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { UseHotels } from "../../Context/HotelsProvider";
+import useFetch from "../../hook/useFetch";
+import { useSearchParams } from "react-router-dom";
 function Map() {
-  const [position,setPosition] = useState([])
-  
+  const { isloading, hotels } = UseHotels();
+  const [position, setPosition] = useState([53, -3]);
+  const lat =useSearchParams("lat")
+  const lng =useSearchParams("lng")
+  console.log(hotels)
+
   return (
     <div className="mapContainer">
       <MapContainer
         className="map"
-        center={positionm}
+        center={[lat,lng]}
         zoom={13}
         scrollWheelZoom={true}
       >
@@ -17,7 +23,7 @@ function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
         />
-        <Marker position={positionm}>
+        <Marker position={position}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
