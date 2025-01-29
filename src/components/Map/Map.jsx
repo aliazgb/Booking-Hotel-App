@@ -8,6 +8,12 @@ function Map() {
   const { isloading, hotels } = UseHotels();
   const [searchParams, setSearchParams] = useSearchParams();
   const [center, setCenter] = useState([50, 12]);
+  const {
+    isloading: locationIsLoading,
+    position,
+    error,
+    getPosition,
+  } = useUserLocation();
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
   useEffect(() => {
@@ -15,10 +21,16 @@ function Map() {
       setCenter([lat, lng]);
     }
   }, [lat, lng]);
-  const {isloading:locationIsLoading ,position ,error , getPosition}=useUserLocation()
+  useEffect(() => {
+    if (position?.lat) {
+      setCenter([position.lat, position.lng]);
+    }
+  }, [position]);
   return (
     <div className="mapContainer">
-      <button className="getLocation" onClick={getPosition}>use Your Location</button>
+      <button className="getLocation" onClick={getPosition}>
+        use Your Location
+      </button>
       <MapContainer
         className="map"
         center={center}
