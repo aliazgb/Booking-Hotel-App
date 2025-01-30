@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HiCalendar, HiSearch, HiMinus, HiPlus } from "react-icons/hi";
 import { MdLocationOn } from "react-icons/md";
 import { useOutSideClick } from "../../hook/useOutsideClick";
@@ -12,7 +12,6 @@ function Header() {
   const [openOption, setOpenOption] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [destination, setDestination] = useState("");
-  // const [openDate ,setOpenDate]=useState(false)
   const navigate = useNavigate();
   const [option, setOption] = useState({
     adult: 1,
@@ -26,6 +25,16 @@ function Header() {
       key: "selection",
     },
   ]);
+  useEffect(() => {
+    if (date[0].endDate !== date[0].startDate) {
+      const timer = setTimeout(() => {
+        setOpenDate(false);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [date[0].endDate]);
+
   const handleOption = (name, operation) => {
     setOption((prev) => {
       return {
@@ -46,13 +55,12 @@ function Header() {
     });
   };
   const dateRef = useRef();
-  useOutSideClick(dateRef, () => setOpenDate(false), "dateOpener");
   return (
     <div className="header">
       <div className="headerSearch">
         <div className="headerSearchItem">
           <MdLocationOn className="locationIcon" />
-          
+
           <input
             type="text"
             placeholder="Where to go ?"
@@ -62,24 +70,28 @@ function Header() {
           />
           <span className="headerSearchItem seperator"></span>
         </div>
-
-        <div className="headerSearchItem dateOpener" ref={dateRef} onClick={() => setOpenDate(!openDate)}>
-          <HiCalendar className="dateIcon" />
-          <div className="dateDropDown">
-            {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
-              date[0].endDate,
-              "MM/dd/yyyy"
-            )}`}
+        <div className="dateOpener">
+          <div className="headerSearchItem">
+            <HiCalendar className="dateIcon" />
+            <div
+              className="dateDropDown"
+              onClick={() => setOpenDate(!openDate)}
+            >
+              {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
+                date[0].endDate,
+                "MM/dd/yyyy"
+              )}`}
+            </div>
+            {openDate && (
+              <DateRange
+                ranges={date}
+                onChange={(item) => setDate([item.selection])}
+                className="date"
+                minDate={new Date()}
+              />
+            )}
+            <span className="headerSearchItem seperator"></span>
           </div>
-          {openDate && (
-            <DateRange
-              ranges={date}
-              onChange={(item) => setDate([item.selection])}
-              className="date"
-              minDate={new Date()}
-            />
-          )}
-          <span className="headerSearchItem seperator"></span>
         </div>
         <div className="headerSearchItem">
           <div id="optionDropDown" onClick={() => setOpenOption(!openOption)}>
