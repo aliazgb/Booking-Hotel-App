@@ -11,7 +11,6 @@ import HotelsProvider from "./Context/HotelsProvider";
 function App() {
   return (
     <HotelsProvider>
-      <Toaster />
       <Header />
       <Routes>
         <Route path="/" element={<LocationList />} />
