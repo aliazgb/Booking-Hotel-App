@@ -161,24 +161,41 @@
 
 /* room detail */
 .room {
-  display: flex;
   align-items: stretch;
   justify-content: space-between;
   gap: 1rem;
-  max-width: 450px;
-  /* max-height: 450px; */
-  margin: 2rem auto;
 }
-
+.room-book{
+  display: flex;
+  justify-content: center;
+}
+.room-book button {
+  border: 1px solid var(--primary-600);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: var(--primary-700);
+  color: #fff;
+}
+.roomDetail{
+  display: flex;
+  
+}
+.detail-hotel{
+  max-width: 450px;
+}
 .roomDetail h2 {
   margin-bottom: 0.3rem;
   font-size: 1rem;
 }
 .roomDetail > div {
+  align-self: center;
   margin-bottom: 1rem;
+  width: 30%;
 }
 .roomDetail img {
-  width: 100%;
+  width: 70%;
+  height: 5%;
   height: auto;
   object-fit: cover;
   border-radius: 0.8rem;
@@ -257,6 +274,8 @@
 }
 
 .sidebar {
+  display: flex;
+  justify-content: center;
   width: 35%;
   overflow-y: scroll;
   padding-right: 1rem;
