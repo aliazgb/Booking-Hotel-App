@@ -167,9 +167,13 @@
 }
 .room-book{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content:space-around;
 }
-.room-book button {
+
+.room-book >button{
+  justify-self: center; /* یا start, end, stretch */
+  align-self: center;
   border: 1px solid var(--primary-600);
   padding: 10px 18px;
   border-radius: 8px;
@@ -177,12 +181,15 @@
   background-color: var(--primary-700);
   color: #fff;
 }
+
 .roomDetail{
   display: flex;
+  justify-content: space-between;
+  height: 50%;
   
 }
 .detail-hotel{
-  max-width: 450px;
+  /* max-width: 450px; */
 }
 .roomDetail h2 {
   margin-bottom: 0.3rem;
@@ -190,8 +197,9 @@
 }
 .roomDetail > div {
   align-self: center;
-  margin-bottom: 1rem;
-  width: 30%;
+  /* margin-bottom: 1rem; */
+  /* width: 30%; */
+  height: 100%;
 }
 .roomDetail img {
   width: 70%;
@@ -290,6 +298,8 @@
   .sidebar {
     width: 50%;
   }
+  
+
 }
 
 /* bookmark page */

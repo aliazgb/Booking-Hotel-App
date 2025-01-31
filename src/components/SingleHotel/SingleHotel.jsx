@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import { UseHotels } from "../../Context/HotelsProvider";
+import { CiStar } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 function SingleHotel() {
   const { id } = useParams();
   const { getHotel, isLoadingHotel, dataHotel } = UseHotels();
   const star = dataHotel.number_of_reviews || 0;
+  const navigate = useNavigate();
   useEffect(() => {
     getHotel(id);
   }, [id]);
@@ -21,6 +24,10 @@ function SingleHotel() {
         <img src={dataHotel.xl_picture_url} alt={dataHotel.name} />
         <div className="room-book">
           <button>Book Now</button>
+
+          <Link to={"/hotels/"}>
+            <button>← Back</button>
+          </Link>
         </div>
       </div>
       <div className="flex gap-1">
