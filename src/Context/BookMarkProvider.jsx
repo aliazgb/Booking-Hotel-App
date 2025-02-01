@@ -5,9 +5,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 const BASE_URL = "http://localhost:5000";
 const BookMarkContext = createContext();
-function BookMarkProvider({ children }) {
-  const [isLoadingCurrentBookmark, setIsLoadingCurrentBookmark] =useState(false);
-  const [currentBookMark, setCurrentBookMark] = useState(null);
+function BookMarkProviderList({ children }) {
+  const [currentBookMark, setCurrentBookMark] = useState();
+  const [isLoadingCurrentBookmark, setIsLoadingCurrentBookmark] =
+    useState(false);
   const { isLoading, data: bookmarks } = useFetch(`${BASE_URL}/bookmarks`);
   async function getBookmark(id) {
     try {
@@ -23,14 +24,20 @@ function BookMarkProvider({ children }) {
   }
   return (
     <BookMarkContext.Provider
-      value={{ isLoading, bookmarks, currentBookMark, getBookmark, isLoadingCurrentBookmark }}
+      value={{
+        isLoading,
+        bookmarks,
+        currentBookMark,
+        getBookmark,
+        isLoadingCurrentBookmark,
+      }}
     >
       {children}
     </BookMarkContext.Provider>
   );
 }
 
-export default BookMarkProvider;
+export default BookMarkProviderList;
 export function useBookMark() {
   return useContext(BookMarkContext);
 }
