@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import useFetch from "../hook/useFetch";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -7,19 +7,48 @@ const BASE_URL = "http://localhost:5000";
 const BookMarkContext = createContext();
 function BookMarkProviderList({ children }) {
   const [currentBookMark, setCurrentBookMark] = useState(null);
-  const [isLoadingCurrentBookmark, setIsLoadingCurrentBookmark] =
-    useState(false);
-  const { isLoading, data: bookmarks } = useFetch(`${BASE_URL}/bookmarks`);
+  const [isLoading, setIsLoading] = useState(false);
+  const [bookmarks, setBookmarks] = useState([]);
+  useEffect(() => {
+    async function fetchBookmark(id) {
+      setIsLoading(true);
+      setCurrentBookMark(null);
+      try {
+        const { data } = await axios.get(`${BASE_URL}/bookmarks/`);
+        setCurrentBookMark(data);
+        setIsLoading(false);
+      } catch (error) {
+        toast.error(error.message);
+        setIsLoading(true);
+        setCurrentBookMark([]);
+      }
+    }
+    fetchBookmark()
+  }, []);
   async function getBookmark(id) {
-    setIsLoadingCurrentBookmark(true);
+    setIsLoading(true);
     setCurrentBookMark(null);
     try {
       const { data } = await axios.get(`${BASE_URL}/bookmarks/${id}`);
       setCurrentBookMark(data);
-      setIsLoadingCurrentBookmark(false);
+      setIsLoading(false);
     } catch (error) {
       toast.error(error.message);
-      setIsLoadingCurrentBookmark(true);
+      setIsLoading(true);
+      setCurrentBookMark([]);
+    }
+  }
+  async function createBookmark(newBookmark) {
+    setIsLoading(true);
+    setCurrentBookMark(null);
+    try {
+      const { data } = await axios.post(`${BASE_URL}/bookmarks/`, newBookmark);
+      setCurrentBookMark(data);
+      setIsLoading(false);
+      setBookmarks((prev) => [...prev, data]);
+    } catch (error) {
+      toast.error(error.message);
+      setIsLoading(true);
       setCurrentBookMark([]);
     }
   }
@@ -27,10 +56,11 @@ function BookMarkProviderList({ children }) {
     <BookMarkContext.Provider
       value={{
         isLoading,
-        bookmarks,
+        createBookmark,
         currentBookMark,
         getBookmark,
-        isLoadingCurrentBookmark,
+        bookmarks,
+        // isLoadingCurrentBookmark,
       }}
     >
       {children}

@@ -1,7 +1,6 @@
 {
   "hotels": [
     {
-      
       "id": "6017649",
       "listing_url": "https://www.airbnb.com/rooms/6017649",
       "scrape_id": "20170402075052",
@@ -1286,49 +1285,139 @@
   ],
   "bookmarks": [
     {
-      "cityName": "Abalessa",
-      "country": "Algeria",
-      "countryCode": "DZ",
-      "latitude": "23.18455079512732",
-      "longitude": "3.795523257510883",
-      "host_location": "Abalessa Algeria",
+      "cityName": "Roslau",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "50.065481989284315",
+      "longitude ": "11.93870544433594",
+      "host_location": "Roslau Germany",
       "id": 1
     },
     {
-      "cityName": "Mahidasht",
-      "country": "Iran",
-      "countryCode": "IR",
-      "latitude": "34.32869425037187",
-      "longitude": "46.724183117022086",
-      "host_location": "Mahidasht Iran",
+      "cityName": "Weißenstadt",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "50.07903019316849",
+      "longtitude": "11.912612915039062",
+      "host_location": "Weißenstadt Germany",
+      "id": 2
+    },
+    {
+      "cityName": "Wunsiedel",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "50.02921910326878",
+      "longtitude": "11.959557723327132",
+      "host_location": "Wunsiedel Germany",
+      "id": 3
+    },
+    {
+      "cityName": "Blenio",
+      "country": "Switzerland",
+      "countryCode": "CH",
+      "latitude": "46.5197315819285",
+      "longtitude": "8.82047816010446",
+      "host_location": "Blenio Switzerland",
       "id": 4
     },
     {
-      "cityName": "Sanandaj",
-      "country": "Iran",
-      "countryCode": "IR",
-      "latitude": "35.31372444726279",
-      "longitude": "47.03114358752335",
-      "host_location": "Sanandaj Iran",
+      "cityName": "Al Kharjah",
+      "country": "Egypt",
+      "countryCode": "EG",
+      "latitude": "24.14158141225466",
+      "longtitude": "30.691075124892855",
+      "host_location": "Al Kharjah Egypt",
       "id": 5
     },
     {
-      "cityName": "A Dakhla Oasis",
-      "country": "Egypt",
-      "countryCode": "EG",
-      "latitude": "25.02090651422749",
-      "longitude": "29.09059588509316",
-      "host_location": "A Dakhla Oasis Egypt",
+      "cityName": "Wunsiedel",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "50.01906725403998",
+      "longtitude": "11.9988893227346",
+      "host_location": "Wunsiedel Germany",
+      "id": 6
+    },
+    {
+      "cityName": "Matour",
+      "country": "France",
+      "countryCode": "FR",
+      "latitude": "46.309786258857805",
+      "longtitude": "4.491876697382456",
+      "host_location": "Matour France",
       "id": 7
     },
     {
-      "cityName": "Baba Kot",
-      "country": "Pakistan",
-      "countryCode": "PK",
-      "latitude": "28.43528783183169",
-      "longitude": "67.78003711374224",
-      "host_location": "Baba Kot Pakistan",
+      "cityName": "Wunsiedel",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "50.02425604564333",
+      "longtitude": "11.979732513427736",
+      "host_location": "Wunsiedel Germany",
       "id": 8
+    },
+    {
+      "cityName": "Cerna v Posumavi",
+      "country": "Czechia",
+      "countryCode": "CZ",
+      "latitude": "48.753009146584624",
+      "longtitude": "14.150390625000002",
+      "host_location": "Cerna v Posumavi Czechia",
+      "id": 9
+    },
+    {
+      "cityName": "Kirishi",
+      "country": "Russian Federation (the)",
+      "countryCode": "RU",
+      "latitude": "59.55939217094407",
+      "longtitude": "32.58104771375657",
+      "host_location": "Kirishi Russian Federation (the)",
+      "id": 10
+    },
+    {
+      "cityName": "Tervo",
+      "country": "Finland",
+      "countryCode": "FI",
+      "latitude": "63.02117370052272",
+      "longtitude": "26.9296869635582",
+      "host_location": "Tervo Finland",
+      "id": 11
+    },
+    {
+      "cityName": "Wunsiedel",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "50.01741347476012",
+      "longtitude": "11.982994079589846",
+      "host_location": "Wunsiedel Germany",
+      "id": 12
+    },
+    {
+      "cityName": "Wunsiedel",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "50.015647491807854",
+      "longtitude": "11.988658905029299",
+      "host_location": "Wunsiedel Germany",
+      "id": 13
+    },
+    {
+      "cityName": "Wunsiedel",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "50.02061415342581",
+      "longitude": "11.98762893676758",
+      "host_location": "Wunsiedel Germany",
+      "id": 14
+    },
+    {
+      "cityName": "Tiefgraben",
+      "country": "Austria",
+      "countryCode": "AT",
+      "latitude": "47.88437988541608",
+      "longitude": "13.307956416816474",
+      "host_location": "Tiefgraben Austria",
+      "id": 15
     }
   ]
 }
