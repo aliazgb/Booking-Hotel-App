@@ -1364,6 +1364,123 @@
       "longitude": "28.80547264943893",
       "host_location": "Savonlinna Finland",
       "id": 17
+    },
+    {
+      "cityName": "Madrid",
+      "country": "Spain",
+      "countryCode": "ES",
+      "latitude": "40.516374820657695",
+      "longitude": "-3.663313446537602",
+      "host_location": "Madrid Spain",
+      "id": 18
+    },
+    {
+      "cityName": "",
+      "country": "",
+      "countryCode": "",
+      "latitude": "40.4178743741405lng=-3.6900329589843754",
+      "longitude": null,
+      "host_location": " ",
+      "id": 19
+    },
+    {
+      "cityName": "",
+      "country": "",
+      "countryCode": "",
+      "latitude": "52.368466776562lng=4.861157573506015",
+      "longitude": null,
+      "host_location": " ",
+      "id": 20
+    },
+    {
+      "cityName": "Amsterdam",
+      "country": "Netherlands (Kingdom of the)",
+      "countryCode": "NL",
+      "latitude": "52.36464636933365",
+      "longitude": "4.8740486118580595",
+      "host_location": "Amsterdam Netherlands (Kingdom of the)",
+      "id": 21
+    },
+    {
+      "cityName": "Madrid",
+      "country": "Spain",
+      "countryCode": "ES",
+      "latitude": "40.45723551938858",
+      "longitude": "-3.7201585690132903",
+      "host_location": "Madrid Spain",
+      "id": 22
+    },
+    {
+      "cityName": "Madrid",
+      "country": "Spain",
+      "countryCode": "ES",
+      "latitude": "40.45527519576074",
+      "longitude": "-3.717410509666031",
+      "host_location": "Madrid Spain",
+      "id": 23
+    },
+    {
+      "cityName": "Amsterdam",
+      "country": "Netherlands (Kingdom of the)",
+      "countryCode": "NL",
+      "latitude": "52.37776904390054",
+      "longitude": "4.847976745542827",
+      "host_location": "Amsterdam Netherlands (Kingdom of the)",
+      "id": 24
+    },
+    {
+      "cityName": "Wunsiedel",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "50.03980251719292",
+      "longitude": "11.95268849828151",
+      "host_location": "Wunsiedel Germany",
+      "id": 28
+    },
+    {
+      "cityName": "Torshavn",
+      "country": "Faroe Islands (the)",
+      "countryCode": "FO",
+      "latitude": "62.17838149700445",
+      "longitude": "-6.902210723571186",
+      "host_location": "Torshavn Faroe Islands (the)",
+      "id": 29
+    },
+    {
+      "cityName": "Pruszcz",
+      "country": "Poland",
+      "countryCode": "PL",
+      "latitude": "53.306339309974334",
+      "longitude": "18.20254438005238",
+      "host_location": "Pruszcz Poland",
+      "id": 30
+    },
+    {
+      "cityName": "Wunsiedel",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "50.05060668017917",
+      "longitude": "11.946178477136753",
+      "host_location": "Wunsiedel Germany",
+      "id": 31
+    },
+    {
+      "cityName": "Favrskov Mark",
+      "country": "Denmark",
+      "countryCode": "DK",
+      "latitude": "56.309068665054966",
+      "longitude": "9.823489017568045",
+      "host_location": "Favrskov Mark Denmark",
+      "id": 32
+    },
+    {
+      "cityName": "Evora",
+      "country": "Portugal",
+      "countryCode": "PT",
+      "latitude": "38.5773123278118",
+      "longitude": "-7.869027772636344",
+      "host_location": "Evora Portugal",
+      "id": 33
     }
   ]
 }

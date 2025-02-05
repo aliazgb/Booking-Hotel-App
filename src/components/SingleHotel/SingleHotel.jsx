@@ -4,10 +4,12 @@ import Loader from "../Loader/Loader";
 import { UseHotels } from "../../Context/HotelsProvider";
 import { CiStar } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import useUrlLocation from "../../hook/useUrlLocation";
 
 function SingleHotel() {
   const { id } = useParams();
   const { getHotel, isLoadingHotel, dataHotel } = UseHotels();
+ const [lat, lng]= useUrlLocation()
   const star = dataHotel.number_of_reviews || 0;
   const navigate = useNavigate();
   useEffect(() => {
@@ -23,8 +25,8 @@ function SingleHotel() {
       <div className="roomDetail">
         <img src={dataHotel.xl_picture_url} alt={dataHotel.name} />
         <div className="room-book">
-          <button>Book Now</button>
-
+          <button>Book Now </button>
+          {/* onClick={()=>navigate(`/bookmark/add?lat=${lat}&lng=${lng}`) */}
           <Link to={"/hotels/"}>
             <button>← Back</button>
           </Link>

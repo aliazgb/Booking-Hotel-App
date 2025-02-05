@@ -24,18 +24,25 @@ function bookmarkReducer(state, actions) {
         isLoading: false,
         currentBookMark: actions.payload,
       };
-    case "bookmark/loaded":return{
-      isLoading: false,
-    }
-    default: throw new Error("unknown Action")
+    case "bookmark/loaded":
+      return {
+        isLoading: false,
+        ...state,
+        bookmarks: [...state.bookmarks, actions.payload],
+      };
+    case "currentBookMark/delete":
+      return {
+        isLoading: false,
+        ...state,
+        bookmarks:state.bookmarks.filter((item)=>item.id!==actions.payload)
+      };
+    default:
+      throw new Error("unknown Action");
   }
 }
 
 const BookMarkContext = createContext();
 function BookMarkProviderList({ children }) {
-  // const [currentBookMark, setCurrentBookMark] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [bookmarks, setBookmarks] = useState([]);
   const [{ isLoading, bookmarks, currentBookMark }, dispatch] = useReducer(
     bookmarkReducer,
     initialState
@@ -57,10 +64,8 @@ function BookMarkProviderList({ children }) {
     try {
       const { data } = await axios.get(`${BASE_URL}/bookmarks/${id}`);
       dispatch({ type: "currentBookMark/loaded", payload: data });
-      dispatch({ type: "loading" });
     } catch (error) {
       toast.error(error.message);
-      dispatch({ type: "loading" });
     }
   }
   async function createBookmark(newBookmark) {
@@ -68,20 +73,16 @@ function BookMarkProviderList({ children }) {
     try {
       const { data } = await axios.post(`${BASE_URL}/bookmarks/`, newBookmark);
       dispatch({ type: "currentBookMark/loaded", payload: data });
-      dispatch({type:"bookmark/loaded",payload:data})
-      setBookmarks((prev) => [...prev, data]);
-    } catch (error) {
-      toast.error(error.message);
-      setIsLoading(true);
-      setCurrentBookMark([]);
-    }
+      dispatch({ type: "bookmark/loaded", payload: data });
+    } catch (error) {}
   }
   async function deleteBookmark(id) {
     try {
       await axios.delete(`${BASE_URL}/bookmarks/${id}`);
-      setBookmarks((prev) => prev.filter((item) => item.id !== id));
+      dispatch({ type: "currentBookMark/delete",payload:id });
+      // setBookmarks((prev) => prev.filter((item) => item.id !== id));
     } catch (error) {
-      setIsLoading(true);
+      toast.error(error.message);
     }
   }
   return (
@@ -93,7 +94,6 @@ function BookMarkProviderList({ children }) {
         getBookmark,
         bookmarks,
         deleteBookmark,
-        // isLoadingCurrentBookmark,
       }}
     >
       {children}
