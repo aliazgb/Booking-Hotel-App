@@ -233,7 +233,9 @@
 .map {
   height: 100%;
 }
-
+.bmk{
+  width: 80%;
+}
 .searchList {
   display: flex;
   flex-direction: column;
