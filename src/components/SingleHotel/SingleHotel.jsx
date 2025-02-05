@@ -25,8 +25,8 @@ function SingleHotel() {
       <div className="roomDetail">
         <img src={dataHotel.xl_picture_url} alt={dataHotel.name} />
         <div className="room-book">
-          <button>Book Now </button>
-          {/* onClick={()=>navigate(`/bookmark/add?lat=${lat}&lng=${lng}`) */}
+          <button onClick={()=>navigate(`/bookmark/add?lat=${lat}&lng=${lng}`)} >Book Now </button>
+          
           <Link to={"/hotels/"}>
             <button>← Back</button>
           </Link>

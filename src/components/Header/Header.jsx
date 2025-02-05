@@ -113,6 +113,7 @@ function Header() {
           </button>
         </div>
       </div>
+      <button className="btn btn--primary" onClick={()=>navigate("/login")}>Login</button>
     </div>
   );
 }

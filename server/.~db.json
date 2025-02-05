@@ -1508,6 +1508,15 @@
       "longitude": "4.83853150081588",
       "host_location": "Amsterdam Netherlands (Kingdom of the)",
       "id": 36
+    },
+    {
+      "cityName": "Amsterdam",
+      "country": "Netherlands (Kingdom of the)",
+      "countryCode": "NL",
+      "latitude": "52.426266586403486",
+      "longitude": "4.833226248606297",
+      "host_location": "Amsterdam Netherlands (Kingdom of the)",
+      "id": 37
     }
   ]
 }
