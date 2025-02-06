@@ -1,18 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
-import { HiCalendar, HiSearch, HiMinus, HiPlus } from "react-icons/hi";
+import {
+  HiCalendar,
+  HiSearch,
+  HiMinus,
+  HiPlus,
+  HiLogout,
+} from "react-icons/hi";
 import { MdLocationOn } from "react-icons/md";
 import { useOutSideClick } from "../../hook/useOutsideClick";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
 import { format, compareAsc } from "date-fns";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { NavLink, createSearchParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthProvider";
 
 function Header() {
   const [openOption, setOpenOption] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [destination, setDestination] = useState("");
   const navigate = useNavigate();
+  const { isAuthenticated, createIsDone } = useAuth();
   const [option, setOption] = useState({
     adult: 1,
     children: 0,
@@ -54,7 +62,6 @@ function Header() {
       search: encoded.toString(),
     });
   };
-  const dateRef = useRef();
   return (
     <div className="header">
       <div className="headerSearch">
@@ -113,11 +120,31 @@ function Header() {
           </button>
         </div>
       </div>
-      <button className="btn btn--primary" onClick={()=>navigate("/login")}>Login</button>
+      <User />
     </div>
   );
 }
-
+function User() {
+  const { login, isAuthenticated, name ,logout} = useAuth();
+  const handleLogout=()=>{
+    logout()
+    navigate("/")
+  }
+  return (
+    <div>
+      {isAuthenticated ? (
+        <div>
+          <span>{name}</span>&nbsp;
+          <button>
+            <HiLogout className="icon" onClick={handleLogout} />
+          </button>
+        </div>
+      ) : (
+        <NavLink to={"/login"}>login</NavLink>
+      )}
+    </div>
+  );
+}
 function GuestOptionList({ option, handleOption, setOpenOption }) {
   const optionRef = useRef();
   useOutSideClick(optionRef, () => setOpenOption(false), "optionDropDown");

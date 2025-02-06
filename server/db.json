@@ -1508,6 +1508,87 @@
       "longitude": "4.83853150081588",
       "host_location": "Amsterdam Netherlands (Kingdom of the)",
       "id": 36
+    },
+    {
+      "cityName": "Amsterdam",
+      "country": "Netherlands (Kingdom of the)",
+      "countryCode": "NL",
+      "latitude": "52.426266586403486",
+      "longitude": "4.833226248606297",
+      "host_location": "Amsterdam Netherlands (Kingdom of the)",
+      "id": 37
+    },
+    {
+      "cityName": "Madrid",
+      "country": "Spain",
+      "countryCode": "ES",
+      "latitude": "40.4178743741405",
+      "longitude": "-3.6900329589843754",
+      "host_location": "Madrid Spain",
+      "id": 38
+    },
+    {
+      "cityName": "Madrid",
+      "country": "Spain",
+      "countryCode": "ES",
+      "latitude": "40.4178743741405",
+      "longitude": "-3.6900329589843754",
+      "host_location": "Madrid Spain",
+      "id": 39
+    },
+    {
+      "cityName": "Vert-le-Grand",
+      "country": "France",
+      "countryCode": "FR",
+      "latitude": "48.56",
+      "longitude": "2.35",
+      "host_location": "Vert-le-Grand France",
+      "id": 40
+    },
+    {
+      "cityName": "Madrid",
+      "country": "Spain",
+      "countryCode": "ES",
+      "latitude": "40.4178743741405",
+      "longitude": "-3.6900329589843754",
+      "host_location": "Madrid Spain",
+      "id": 41
+    },
+    {
+      "cityName": "M'Naguer",
+      "country": "Algeria",
+      "countryCode": "DZ",
+      "latitude": "32.62627124009989",
+      "longitude": "6.286785755321982",
+      "host_location": "M'Naguer Algeria",
+      "id": 42
+    },
+    {
+      "cityName": "Amsterdam",
+      "country": "Netherlands (Kingdom of the)",
+      "countryCode": "NL",
+      "latitude": "52.36456756846072",
+      "longitude": "4.875639539930118",
+      "host_location": "Amsterdam Netherlands (Kingdom of the)",
+      "id": 43
+    },
+    {
+      "cityName": "Wunsiedel",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "50.02723304071705",
+      "longitude": "11.977248355375034",
+      "host_location": "Wunsiedel Germany",
+      "id": 44
+    },
+    {
+      "cityName": "Amsterdam",
+      "country": "Netherlands (Kingdom of the)",
+      "countryCode": "NL",
+      "latitude": "52.36744044032673",
+      "longitude": "4.875637465615338",
+      "host_location": "Amsterdam Netherlands (Kingdom of the)",
+      "id": 45
     }
   ]
 }

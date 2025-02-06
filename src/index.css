@@ -32,7 +32,10 @@ button {
   background-color: transparent;
   cursor: pointer;
 }
-
+.register{
+  color:var(--primary-600);
+  margin-top: 1rem
+}
 button:disabled {
   cursor: not-allowed;
 }

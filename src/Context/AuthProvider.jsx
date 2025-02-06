@@ -1,20 +1,20 @@
 import React, { createContext, useContext, useReducer } from "react";
+
 const AuthContext = createContext();
+
 const initialState = {
   user: null,
   isAuthenticated: false,
+  registeredUser: null,
+  createIsDone:false
 };
-const FAKE_USER = {
-  name: "ali",
-  email: "user@gmail.com",
-  password: "1234",
-};
+
 function authReducer(state, action) {
   switch (action.type) {
     case "login":
       return {
         ...state,
-        user: action.payload,
+        user: state.registeredUser, 
         isAuthenticated: true,
       };
     case "logout":
@@ -23,28 +23,46 @@ function authReducer(state, action) {
         user: null,
         isAuthenticated: false,
       };
+    case "createAccount":
+      return {
+        ...state,
+        registeredUser: action.payload, 
+        createIsDone:true
+      };
     default:
-      throw new Error("unknown Action");
+      throw new Error("Unknown Action");
   }
 }
+
 export default function AuthContextProvider({ children }) {
-  const [{ user, isAuthenticated }, dispatch] = useReducer(
-    authReducer,
-    initialState
-  );
-  function login(email, password) {
-    if (FAKE_USER.email == email && FAKE_USER.password == password)
-      dispatch({ type: "login", payload: FAKE_USER });
+  const [state, dispatch] = useReducer(authReducer, initialState);
+
+  function createAccount(name, email, password) {
+    const newUser = { name, email, password };
+    dispatch({ type: "createAccount", payload: newUser });
   }
+
+  function login(email, password) {
+    if (
+      state.registeredUser &&
+      state.registeredUser.email === email &&
+      state.registeredUser.password === password
+    ) {
+      dispatch({ type: "login" });
+    }
+  }
+
   function logout() {
     dispatch({ type: "logout" });
   }
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ ...state, login, logout, createAccount,isAuthenticated: state.isAuthenticated ,name: state.registeredUser ? state.registeredUser.name : ''}}>
       {children}
     </AuthContext.Provider>
   );
 }
+
 export function useAuth() {
   return useContext(AuthContext);
 }
