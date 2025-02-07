@@ -17,6 +17,11 @@ function Signup() {
       return;
     }
 
+    if (password.length < 4) {
+      toast.error("Password must be at least 4 characters long");
+      return;
+    }
+
     const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com)$/;
     if (!emailPattern.test(email)) {
       toast.error("Email must be from Gmail or Yahoo!");

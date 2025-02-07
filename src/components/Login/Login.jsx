@@ -20,7 +20,7 @@ function Login() {
   }, [navigate, isAuthenticated]);
   return (
     <div className="loginContainer">
-      <h2>Login</h2>
+      <h2 style={{ textAlign: "center" }}>Login</h2>
       <form className="form" onSubmit={handleLogin}>
         <div className="formControl">
           <label htmlFor="email">Email</label>
@@ -42,9 +42,17 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <NavLink to={"/signup"} className={"register"}>Register</NavLink>
-        <div className="buttons">
+
+        <div className="formcontrol">
           <button className="btn btn--primary">Login</button>
+        </div>
+        <div className="formControl signup">
+          <p>
+            don't have an account?
+            <NavLink to={"/signup"} className={"register"}>
+              Signup
+            </NavLink>
+          </p>
         </div>
       </form>
     </div>

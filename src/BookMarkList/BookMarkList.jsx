@@ -1,9 +1,10 @@
 import React from "react";
 import { useBookMark } from "../Context/BookMarkProvider";
 import ReactCountryFlag from "react-country-flag";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiTrash } from "react-icons/hi";
 function BookMarkList() {
+  const navigate =useNavigate()
   const { bookmarks, currentBookMark, deleteBookmark } = useBookMark();
   const handleDelete = async (e, id) => {
     e.preventDefault();
@@ -39,6 +40,7 @@ function BookMarkList() {
           );
         })}
       </div>
+      <button className="btn btn--primary" onClick={()=>navigate("/hotels")}>Recommended ...</button>
     </div>
   );
 }

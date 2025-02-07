@@ -1,4 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { GrLogout } from "react-icons/gr";
+
 import {
   HiCalendar,
   HiSearch,
@@ -20,7 +23,6 @@ function Header() {
   const [openDate, setOpenDate] = useState(false);
   const [destination, setDestination] = useState("");
   const navigate = useNavigate();
-  const { isAuthenticated, createIsDone } = useAuth();
   const [option, setOption] = useState({
     adult: 1,
     children: 0,
@@ -63,7 +65,9 @@ function Header() {
     });
   };
   return (
+    
     <div className="header">
+      <button className="btn btn--primary" onClick={()=>navigate("/bookmark")}>bookmarks</button>
       <div className="headerSearch">
         <div className="headerSearchItem">
           <MdLocationOn className="locationIcon" />
@@ -125,22 +129,24 @@ function Header() {
   );
 }
 function User() {
-  const { login, isAuthenticated, name ,logout} = useAuth();
-  const handleLogout=()=>{
-    logout()
-    navigate("/")
-  }
+  const { isAuthenticated, name, logout } = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
   return (
     <div>
       {isAuthenticated ? (
         <div>
-          <span>{name}</span>&nbsp;
-          <button>
-            <HiLogout className="icon" onClick={handleLogout} />
+          <button className="btn btn--primary" onClick={handleLogout}>
+            <GrLogout className="icon" />
           </button>
         </div>
       ) : (
-        <NavLink to={"/login"}>login</NavLink>
+        <button onClick={() => navigate("/login")} className="btn btn--primary">
+          login
+        </button>
       )}
     </div>
   );
