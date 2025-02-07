@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useFetch from "../hook/useFetch";
 
 function LocationList() {
-  const { data, isLoading } = useFetch("http://localhost:5000/hotels", "");
+  const { data, isLoading } = useFetch("https://server-1-ej86.onrender.com/hotels", "");
 
   if (isLoading) <p>Loading ...</p>;
   return (
