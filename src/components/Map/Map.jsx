@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+import L from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
 import {
   MapContainer,
   TileLayer,
@@ -10,6 +14,14 @@ import {
 import "leaflet/dist/leaflet.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import useUserLocation from "../../hook/useUserLocation";
+const customIcon = new L.Icon({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 function Map({ markerLocation }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [center, setCenter] = useState([50, 12]);
@@ -19,6 +31,8 @@ function Map({ markerLocation }) {
     error,
     getPosition,
   } = useUserLocation();
+
+
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
   useEffect(() => {
@@ -52,6 +66,7 @@ function Map({ markerLocation }) {
         {markerLocation.map((item) => (
           <Marker
             key={item.id}
+            icon={customIcon}
             position={[item.latitude || 50, item.longitude || 12]}
           >
             <Popup>{item.host_location}</Popup>
