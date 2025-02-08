@@ -1,5 +1,5 @@
 Hotel Booking Platform 🌍
-🚀 Live Demo: https://booking-hotel-app-qd93.vercel.app/
+🚀 Live Demo: https://booking-hotel-app-roz4.vercel.app/
 
 🚀 Key Features
 Interactive Map (Leaflet.js) – Display hotel locations on a map
