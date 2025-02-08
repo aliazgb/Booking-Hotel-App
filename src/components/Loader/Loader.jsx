@@ -23,13 +23,15 @@ export function MainLoader() {
         width: "100vw",
         color: "var(--primary-600)",
         display: "flex",
+        flexDirection:"column",
         justifyContent: "center",
         alignItems: "center",
         gap: "1rem",
         margin: "1rem auto",
       }}
     >
-      <Commet color="#3424d6" size="medium" text="" textColor="#2f1de2" />
+      <Commet color="var(--primary-700)" size="medium" />
+      <p>Loading Data ...</p>
     </div>
   );
 }
