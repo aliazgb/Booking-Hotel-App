@@ -1,17 +1,26 @@
 import { Link } from "react-router-dom";
 import useFetch from "../hook/useFetch";
-
+import { Commet } from "react-loading-indicators";
+import Loader, { MainLoader } from "./Loader/Loader";
 function LocationList() {
-  const { data, isLoading } = useFetch("https://server-1-ej86.onrender.com/hotels", "");
+  const { data, isLoading } = useFetch(
+    "https://server-1-ej86.onrender.com/hotels",
+    ""
+  );
 
-  if (isLoading) <p>Loading ...</p>;
+  if (isLoading) {
+    return <MainLoader />;
+  }
   return (
     <div className="nearbyLocation">
       <h2>Nearby Locations</h2>
       <div className="locationList">
         {data.map((item) => {
           return (
-            <Link key={item.id} to={`/hotels/${item.id}?lat=${item.latitude}&lng=${item.longitude}`}>
+            <Link
+              key={item.id}
+              to={`/hotels/${item.id}?lat=${item.latitude}&lng=${item.longitude}`}
+            >
               <div className="locationItem">
                 <img src={item.xl_picture_url} alt={item.name} />
                 <div className="locationItemDesc">
