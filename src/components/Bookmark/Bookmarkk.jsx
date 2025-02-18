@@ -9,7 +9,7 @@ function BookMarkLayOut() {
       <div className="sidebar">
         <Outlet />
       </div>
-      <div className="mapContainer">
+      <div className="relative h-screen flex-1 bg-text-100">
         <Map markerLocation={bookmarks} />
       </div>
     </div>
