@@ -25,16 +25,17 @@ function App() {
           <Toaster />
           <Header />
           <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <LocationList />
-                  <Footer />
-                </>
-              }
-            />
-            
+            <Route path="/">
+              <Route
+                index
+                element={
+                  <>
+                    <LocationList /> <Footer />
+                  </>
+                }
+              />
+            </Route>
+            <Route path="/" element={<LocationList />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route

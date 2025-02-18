@@ -48,13 +48,15 @@ export default function AuthContextProvider({ children }) {
     dispatch({ type: "createAccount", payload: newUser });
   }
 
-  function login(email, password) {
+  function login(email, password , name) {
+    
     if (
       state.registeredUser &&
       state.registeredUser.email === email &&
       state.registeredUser.password === password
     ) {
-      toast.success('Welcome!')
+      
+      toast.success(`Welcome ${state.registeredUser.name}`)
       dispatch({ type: "login" });
     } else {
       toast.error("username or password is incorrect");

@@ -8,7 +8,7 @@ function Login() {
   const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
-    if (email && password) login(email, password);
+    if (email && password) login(email, password) ;
   };
   useEffect(() => {
     if (isAuthenticated) {

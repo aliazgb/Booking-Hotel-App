@@ -1,28 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-// import { GrLogout } from "react-icons/gr";
 
-import { TbLogout2 } from "react-icons/tb";
-
-
-import {
-  HiCalendar,
-  HiSearch,
-  HiMinus,
-  HiPlus,
-  HiLogout,
-} from "react-icons/hi";
-import { MdLocationOn } from "react-icons/md";
-import { useOutSideClick } from "../../hook/useOutsideClick";
+import { format } from "date-fns";
+import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { DateRange } from "react-date-range";
-import { format, compareAsc } from "date-fns";
-import { NavLink, createSearchParams, useNavigate } from "react-router-dom";
-import { useAuth } from "../../Context/AuthProvider";
 import { FiLogIn } from "react-icons/fi";
+import { HiCalendar, HiMinus, HiPlus, HiSearch } from "react-icons/hi";
+import { MdLocationOn } from "react-icons/md";
+import { TbLogout2 } from "react-icons/tb";
+import { createSearchParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthProvider";
+import { useOutSideClick } from "../../hook/useOutsideClick";
+import { IoMdHome } from "react-icons/io";
 
 function Header() {
+  const { isAuthenticated } = useAuth();
   const [openOption, setOpenOption] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [destination, setDestination] = useState("");
@@ -69,7 +61,8 @@ function Header() {
     });
   };
   return (
-    <div className="flex items-center justify-center gap-x-1 m-4">
+    <div className="flex items-center justify-center gap-x-1 m-4 relative">
+      {isAuthenticated?<button className="absolute left-[1%] sm:left-[10%] btn-primary p-3 text-sm sm:text-[15px] mx-3  " onClick={()=>navigate("/")}><IoMdHome/></button>:""}
       <div
         className="p-4 flex flex-col md:flex-row w-full max-w-[900px] text-sm justify-between items-center gap-4 
         border border-gray-400  rounded-3xl"
@@ -134,13 +127,14 @@ function Header() {
             </button>
           </div>
           <button
-            className="btn-primary p-1 text-sm sm:text-[15px] mx-3"
+            className="btn-primary p-2 text-sm sm:text-[15px] mx-3"
             onClick={() => navigate("/bookmark")}
           >
             bookmarks
           </button>
           <User />
         </div>
+        
       </div>
     </div>
   );
@@ -156,20 +150,23 @@ function User() {
   return (
     <div>
       {isAuthenticated ? (
-        <div>
-          <button className="btn-primary w-13 h-8 p-1" onClick={handleLogout}>
-            <TbLogout2  className="ml-4" />
+        <div >
+          <button className="btn-primary w-10 h-10 p-1 rounded-full flex justify-center items-center " onClick={handleLogout}>
+            <TbLogout2  className="w-5 h-5"/>
           </button>
         </div>
       ) : (
         <button
           onClick={() => navigate("/login")}
-          className="btn-primary w-13 h-8 p-1"
+          className="btn-primary w-10 h-10 p-1 rounded-full flex justify-center items-center"
         >
-          <FiLogIn className="ml-4" />
+          <FiLogIn className="w-5 h-5" />
         </button>
+        
       )}
+      
     </div>
+    
   );
 }
 

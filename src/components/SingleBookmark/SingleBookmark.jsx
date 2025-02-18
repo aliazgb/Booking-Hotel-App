@@ -31,6 +31,7 @@ function SingleBookmark() {
         &nbsp;
         <strong>{currentBookMark.cityName}</strong> &nbsp;
         <span>{currentBookMark.country}</span>
+        <p>wdqdwqdqwq</p>
       </div>
     </div>
   );

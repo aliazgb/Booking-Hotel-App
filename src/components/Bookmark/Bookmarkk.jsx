@@ -11,6 +11,7 @@ function BookMarkLayOut() {
       </div>
       <div className="relative h-screen flex-1 bg-text-100">
         <Map markerLocation={bookmarks} />
+        
       </div>
     </div>
   );
