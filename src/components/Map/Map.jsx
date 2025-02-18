@@ -46,13 +46,17 @@ function Map({ markerLocation }) {
     }
   }, [position]);
   return (
-    <div className="mapContainer">
-      <button className="getLocation" onClick={getPosition}>
+    <div className="sm:h-screen h-[50%] flex-1 bg-text-100 relative">
+      <button
+        className="btn-primary px-2 py-1 text-xs font-bold absolute bottom-4 left-4 
+        shadow-[0_0_10px_var(--primary-600)] z-[1000]"
+        onClick={getPosition}
+      >
         Use Your Location
       </button>
 
       <MapContainer
-        className="map"
+        className="h-screen"
         center={center}
         zoom={13}
         scrollWheelZoom={true}

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthProvider";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,12 +16,15 @@ function Login() {
     }
   }, [navigate, isAuthenticated]);
   return (
-    <div className="loginContainer">
-      <h2 style={{ textAlign: "center" }}>Login</h2>
+    <div className="my-8 mx-auto max-w-[25rem] border border-blue-200 p-4 rounded-xl">
+      <h2 className="font-bold text-2xl text-center">Login</h2>
       <form className="form" onSubmit={handleLogin}>
-        <div className="formControl">
-          <label htmlFor="email">Email</label>
+        <div className="relative mb-4">
+          <label className="block mb-1" htmlFor="email">
+            Email
+          </label>
           <input
+            className="input-field p-1.5 text-sm"
             type="text"
             name="email"
             email="email"
@@ -32,9 +32,12 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="formControl">
-          <label htmlFor="password">Password</label>
+        <div className="relative mb-4">
+          <label className="block mb-1" htmlFor="password">
+            Password
+          </label>
           <input
+            className="input-field text-sm p-1.5"
             type="text"
             name="password"
             email="email"
@@ -42,14 +45,16 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
-        <div className="formcontrol">
-          <button className="btn btn--primary">Login</button>
+        <div className="relative mb-4">
+          <button className="btn-primary w-full py-1 mt-4">Login</button>
         </div>
-        <div className="formControl signup">
+        <div className="relative mb-4 signup text-center flex items-center">
           <p>
             don't have an account?
-            <NavLink to={"/signup"} className={"register"}>
+            <NavLink
+              to={"/signup"}
+              className="text-indigo-600 hover:text-indigo-700 transition-all duration-300 ease-in-out mx-2"
+            >
               Signup
             </NavLink>
           </p>

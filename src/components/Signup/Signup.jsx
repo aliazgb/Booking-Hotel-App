@@ -37,12 +37,15 @@ function Signup() {
   };
 
   return (
-    <div className="loginContainer">
-      <h2 style={{ textAlign: "center" }}>Create Account!</h2>
-      <form className="form" onSubmit={handleCreate}>
-        <div className="formControl">
-          <label htmlFor="name">Name</label>
+    <div className="my-8 mx-auto max-w-[25rem] border border-blue-200 p-4 rounded-xl">
+      <h2 className="font-bold text-2xl text-center">Create Account!</h2>
+      <form className="" onSubmit={handleCreate} autoComplete="off">
+        <div className="relative mb-4">
+          <label className="block mb-1" htmlFor="name">
+            Name
+          </label>
           <input
+            className="input-field text-sm p-1.5"
             type="text"
             name="name"
             id="name"
@@ -50,9 +53,12 @@ function Signup() {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div className="formControl">
-          <label htmlFor="email">Email</label>
+        <div className="relative mb-4">
+          <label className="block mb-1" htmlFor="email">
+            Email
+          </label>
           <input
+            className="input-field text-sm p-1.5"
             type="text"
             name="email"
             id="email"
@@ -60,9 +66,13 @@ function Signup() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="formControl">
-          <label htmlFor="password">Password</label>
+        <div className="relative mb-4">
+          <label className="block mb-1" htmlFor="password">
+            Password
+          </label>
           <input
+            autoComplete="new-password"
+            className="input-field text-sm p-1.5"
             type="password"
             name="password"
             id="password"
@@ -70,8 +80,8 @@ function Signup() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div className="buttons">
-          <button className="btn btn--primary">Create</button>
+        <div className="flex items-center justify-between">
+          <button className="btn-primary w-full py-1 mt-4">Create</button>
         </div>
       </form>
     </div>

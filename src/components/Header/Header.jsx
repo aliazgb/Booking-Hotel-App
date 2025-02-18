@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { GrLogout } from "react-icons/gr";
+// import { GrLogout } from "react-icons/gr";
+
+import { TbLogout2 } from "react-icons/tb";
+
 
 import {
   HiCalendar,
@@ -17,6 +20,7 @@ import { DateRange } from "react-date-range";
 import { format, compareAsc } from "date-fns";
 import { NavLink, createSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthProvider";
+import { FiLogIn } from "react-icons/fi";
 
 function Header() {
   const [openOption, setOpenOption] = useState(false);
@@ -65,46 +69,48 @@ function Header() {
     });
   };
   return (
-    
-    <div className="header">
-      <button className="btn btn--primary" onClick={()=>navigate("/bookmark")}>bookmarks</button>
-      <div className="headerSearch">
-        <div className="headerSearchItem">
-          <MdLocationOn className="locationIcon" />
-
-          <input
-            type="text"
-            placeholder="Where to go ?"
-            className="headerSearchInput"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value || "")}
-          />
-          <span className="headerSearchItem seperator"></span>
-        </div>
-        <div className="dateOpener">
-          <div className="headerSearchItem">
-            <HiCalendar className="dateIcon" />
-            <div
-              className="dateDropDown"
-              onClick={() => setOpenDate(!openDate)}
-            >
-              {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
-                date[0].endDate,
-                "MM/dd/yyyy"
-              )}`}
+    <div className="flex items-center justify-center gap-x-1 m-4">
+      <div
+        className="p-4 flex flex-col md:flex-row w-full max-w-[900px] text-sm justify-between items-center gap-4 
+        border border-gray-400  rounded-3xl"
+      >
+        <div className="flex items-center relative">
+          <div className="flex items-center ">
+            <MdLocationOn className="text-rose-500" />
+            <input
+              type="text"
+              placeholder="Where to go ?"
+              className="mx-1 max-w-[100px] outline-0"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value || "")}
+            />
+            <span className="flex items-center relative sm:w-0.5 sm:h-7 sm:mx-4 bg-white sm:bg-gray-500"></span>
+          </div>
+          <div className="dateOpener">
+            <div className="flex items-center relative">
+              <HiCalendar className="text-indigo-600" />
+              <div
+                className="ml-0.5 text-sm"
+                onClick={() => setOpenDate(!openDate)}
+              >
+                {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
+                  date[0].endDate,
+                  "MM/dd/yyyy"
+                )}`}
+              </div>
+              {openDate && (
+                <DateRange
+                  ranges={date}
+                  onChange={(item) => setDate([item.selection])}
+                  className="absolute top-[50px] left-[-5rem] z-[1002]"
+                  minDate={new Date()}
+                />
+              )}
+              <span className="flex items-center relative w-0.5 h-7 bg-white sm:bg-gray-500 mx-2 sm:mx-6"></span>
             </div>
-            {openDate && (
-              <DateRange
-                ranges={date}
-                onChange={(item) => setDate([item.selection])}
-                className="date"
-                minDate={new Date()}
-              />
-            )}
-            <span className="headerSearchItem seperator"></span>
           </div>
         </div>
-        <div className="headerSearchItem">
+        <div className="flex items-center relative z-[1001]">
           <div id="optionDropDown" onClick={() => setOpenOption(!openOption)}>
             {option.adult}adult &bull; {option.children}children &bull;{" "}
             {option.room}room
@@ -116,18 +122,30 @@ function Header() {
               setOpenOption={setOpenOption}
             />
           )}
-          <span className="headerSearchItem seperator"></span>
+          <span className="flex items-center relative w-0.5 h-7 bg-white sm:bg-gray-500 mx-4 sm:ml-7"></span>
         </div>
-        <div className="headerSearchItem">
-          <button className="headerSearchBtn" onClick={handleSearchParams}>
-            <HiSearch className="headerIcon" />
+        <div className="flex flex-row items-center justify-between sm:mr-4">
+          <div className="flex items-center relative">
+            <button
+              className="btn-primary flex items-center justify-center  mx-2 p-2"
+              onClick={handleSearchParams}
+            >
+              <HiSearch className="inline-block w-6 h-6" />
+            </button>
+          </div>
+          <button
+            className="btn-primary p-1 text-sm sm:text-[15px] mx-3"
+            onClick={() => navigate("/bookmark")}
+          >
+            bookmarks
           </button>
+          <User />
         </div>
       </div>
-      <User />
     </div>
   );
 }
+
 function User() {
   const { isAuthenticated, name, logout } = useAuth();
   const navigate = useNavigate();
@@ -139,23 +157,30 @@ function User() {
     <div>
       {isAuthenticated ? (
         <div>
-          <button className="btn btn--primary" onClick={handleLogout}>
-            <GrLogout className="icon" />
+          <button className="btn-primary w-13 h-8 p-1" onClick={handleLogout}>
+            <TbLogout2  className="ml-4" />
           </button>
         </div>
       ) : (
-        <button onClick={() => navigate("/login")} className="btn btn--primary">
-          login
+        <button
+          onClick={() => navigate("/login")}
+          className="btn-primary w-13 h-8 p-1"
+        >
+          <FiLogIn className="ml-4" />
         </button>
       )}
     </div>
   );
 }
+
 function GuestOptionList({ option, handleOption, setOpenOption }) {
   const optionRef = useRef();
   useOutSideClick(optionRef, () => setOpenOption(false), "optionDropDown");
   return (
-    <div className="guestOptions" ref={optionRef}>
+    <div
+      className="absolute bg-white w-50 shadow-md shadow-[#efefef] rounded-lg z-50 top-12 p-3"
+      ref={optionRef}
+    >
       <OptionItem
         option={option}
         type="adult"
@@ -179,20 +204,23 @@ function GuestOptionList({ option, handleOption, setOpenOption }) {
 }
 
 function OptionItem({ option, type, minLimit, handleOption }) {
+  const isDisabled = option[type] <= minLimit;
   return (
-    <div className="guestOptionItem">
-      <span className="optionText">{type}</span>
-      <div className="optionCounter">
+    <div className="flex items-center justify-between gap-4 my-4 ">
+      <span className="inline-block flex-1 text-[0.9rem]">{type}</span>
+      <div className="flex items-center gap-4 ">
         <button
-          className="optionCounterBtn"
+          className={`bg-gray-100 p-1.5 rounded-lg ${
+            isDisabled ? "cursor-not-allowed" : "cursor-pointer"
+          }`}
           onClick={() => handleOption(type, "dec")}
-          disabled={option[type] <= minLimit}
+          disabled={isDisabled}
         >
           <HiMinus className="icon" />
         </button>
         <span className="optionCounterNumber">{option[type]}</span>
         <button
-          className="optionCounterBtn"
+          className="bg-gray-100 p-1.5 rounded-lg cursor-pointer"
           onClick={() => handleOption(type, "inc")}
         >
           <HiPlus className="icon" />

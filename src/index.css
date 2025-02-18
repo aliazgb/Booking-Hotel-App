@@ -1,5 +1,29 @@
+@import "tailwindcss";
+
+@layer components {
+  .btn-primary {
+    @apply text-white cursor-pointer bg-indigo-600 hover:bg-indigo-700 rounded-lg 
+    transition-all duration-300 ease-in-out;
+  }
+  .btn-secondary {
+    @apply cursor-pointer rounded-lg border-1 border-gray-400;
+  }
+  .input-field {
+    @apply w-full rounded-lg border-1 border-indigo-600 outline-none;
+  }
+  .appLayout {
+    @apply mt-4 flex justify-between h-[calc(100vh-130px)] items-stretch;
+  }
+  .sidebar {
+    @apply flex justify-center w-[50%] pr-4 overflow-y-scroll;
+  }
+  .footer-text {
+    @apply hover:text-white my-4 transition-all duration-300 ease-in-out;
+  }
+}
+
 :root {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   --bg-color: #f3f4f6;
   --text-700: #374151;
@@ -13,32 +37,4 @@
   --primary-100: #e0e7ff;
   --rose-500: #f43f5e;
 }
-body {
-  min-height: 100vh;
-  padding: 1rem;
-}
-* {
-  /* margin: 0; */
-  padding: 0;
-  box-sizing: border-box;
-  list-style: none;
-  outline: none;
-  border: none;
-}
 
-button {
-  outline: none;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: not-allowed;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-  cursor: pointer;
-}

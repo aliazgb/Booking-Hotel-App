@@ -3,7 +3,7 @@ import useFetch from "../hook/useFetch";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-const BASE_URL = "https://server-1-ej86.onrender.com/hotels/";
+const BASE_URL = "https://server-9-fixd.onrender.com/hotels/";
 const HotelsContext = createContext();
 function HotelsProvider({ children }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,7 +12,7 @@ function HotelsProvider({ children }) {
   const [dataHotel, setDataHotel] = useState({});
   const room = JSON.parse(searchParams.get("option"))?.room;
   const { isLoading, data: hotels } = useFetch(
-    "https://server-1-ej86.onrender.com/hotels",
+    "https://server-9-fixd.onrender.com/hotels",
     `q=${desti || ""}&accommodates_gte=${room || 1}`
   );
   async function getHotel(id) {

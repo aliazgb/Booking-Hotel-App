@@ -1,21 +1,22 @@
-import Header from "./components/Header/Header";
+import { Toaster } from "react-hot-toast";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import toast, { Toaster } from "react-hot-toast";
-import LocationList from "./components/LocationList";
-import { Routes, Route } from "react-router-dom";
-import LayOut from "./components/AppLayOut/LayOut";
-import Hotels from "./components/Hotels/Hotels";
-import SingleHotel from "./components/SingleHotel/SingleHotel";
-import HotelsProvider from "./Context/HotelsProvider";
-import BookMarkProviderList from "./Context/BookMarkProvider";
-import Bookmarkk from "./components/Bookmark/Bookmarkk";
-import BookMarkList from "./BookMarkList/BookMarkList";
-import SingleBookmark from "./components/SingleBookmark/SingleBookmark";
-import AddNewBookmark from "./components/AddNewBookmark/AddNewBookmark";
-import Login from "./components/Login/Login";
 import AuthContextProvider from "./Context/AuthProvider";
-import Signup from "./components/Signup/Signup";
+import BookMarkProviderList from "./Context/BookMarkProvider";
+import HotelsProvider from "./Context/HotelsProvider";
+import AddNewBookmark from "./components/AddNewBookmark/AddNewBookmark";
+import LayOut from "./components/AppLayOut/LayOut";
+import BookMarkList from "./components/BookMarkList/BookMarkList";
+import Bookmarkk from "./components/Bookmark/Bookmarkk";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
+import Hotels from "./components/Hotels/Hotels";
+import LocationList from "./components/LocationList/LocationList";
+import Login from "./components/Login/Login";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import Signup from "./components/Signup/Signup";
+import SingleBookmark from "./components/SingleBookmark/SingleBookmark";
+import SingleHotel from "./components/SingleHotel/SingleHotel";
 function App() {
   return (
     <AuthContextProvider>
@@ -24,7 +25,16 @@ function App() {
           <Toaster />
           <Header />
           <Routes>
-            <Route path="/" element={<LocationList />} />
+            <Route
+              path="/"
+              element={
+                <>
+                  <LocationList />
+                  <Footer />
+                </>
+              }
+            />
+            
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route

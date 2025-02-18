@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Map from "../Map/Map";
 import { UseHotels } from "../../Context/HotelsProvider";
+import Map from "../Map/Map";
 function LayOut() {
   const { hotels } = UseHotels();
   return (
@@ -9,8 +9,8 @@ function LayOut() {
       <div className="sidebar">
         <Outlet />
       </div>
-      <div className="mapContainer">
-        <Map markerLocation={hotels}/>
+      <div className="relative h-screen flex-1 bg-text-100">
+        <Map markerLocation={hotels} />
       </div>
     </div>
   );

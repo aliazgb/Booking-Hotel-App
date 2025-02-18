@@ -9,7 +9,7 @@ const initialState = {
   bookmarks: [],
   currentBookMark: null,
 };
-const BASE_URL = "https://server-1-ej86.onrender.com";
+const BASE_URL = "https://server-9-fixd.onrender.com";
 
 function bookmarkReducer(state, actions) {
   switch (actions.type) {
