@@ -1,31 +1,60 @@
 import React, { useEffect } from "react";
+import { FaCheckCircle } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { UseHotels } from "../../Context/HotelsProvider";
+import { useDate } from "../../Context/ReservProvider";
 import useUrlLocation from "../../hook/useUrlLocation";
 import Loader from "../Loader/Loader";
-import { FaCheckCircle } from "react-icons/fa";
 function SingleHotel() {
   const { id } = useParams();
   const { getHotel, isLoadingHotel, dataHotel } = UseHotels();
   const [lat, lng] = useUrlLocation();
+  const { setPrice } = useDate();
   const star = dataHotel.number_of_reviews || 0;
   const navigate = useNavigate();
   useEffect(() => {
     getHotel(id);
   }, [id]);
+  const handleBookmark = () => {
+    setPrice(dataHotel.price)
+    navigate(
+      `/bookmark/add?lat=${lat}&lng=${lng}&price=${
+        dataHotel ? dataHotel.price : ""
+      }`
+    );
+  };
   const amenities = dataHotel.amenities || [];
   if (isLoadingHotel) {
     return <Loader />;
   }
 
   return (
-    <div className="justify-between gap-4 items-stretch m-3">
-      <div className="flex flex-col md:flex-row justify-between items-center md:items-stretch gap-4 h-auto md:h-[50%]">
-        <img
-          className="rounded-lg shadow-lg w-full md:w-1/2 object-cover"
-          src={dataHotel.xl_picture_url}
-          alt={dataHotel.name}
-        />
+    <div className="justify-between gap-3 items-stretch m-3">
+      <div className="grid grid-cols-3 grid-rows-2 h-80 gap-3">
+        <div className="bg-amber-300 row-span-2 col-span-2">
+          {" "}
+          <img
+            className="object-cover w-full h-full"
+            src={dataHotel.xl_picture_url}
+            alt={dataHotel.name}
+          />
+        </div>
+        <div className="bg-amber-900 row-span-1 col-span-1">
+          {" "}
+          <img
+            className="w-full h-full object-cover"
+            src={dataHotel.xl_picture_url}
+            alt={dataHotel.name}
+          />
+        </div>
+        <div className=" bg-amber-100 row-span-1 col-span-1">
+          {" "}
+          <img
+            className="w-full h-full object-cover"
+            src={dataHotel.xl_picture_url}
+            alt={dataHotel.name}
+          />
+        </div>
       </div>
       <div className="my-2">
         {"⭐".repeat(star)}
@@ -36,25 +65,27 @@ function SingleHotel() {
       </div>
       <div>
         <h1 className="mt-8">Hotel facilities</h1>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-          {amenities.map((s) => (
-            <li
-              key={s}
-              className="flex items-center text-gray-700 px-4 py-1 sm:text-lg text-sm sm:py-2 rounded-lg mb-1 sm:mb-2"
-            >
-              <FaCheckCircle className="text-indigo-600 mr-2 sm:mr-6 text-lg" />
-              {s}
-            </li>
-          ))}
-        </ul>
+        <div>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+            {amenities.map((s) => (
+              <li
+                key={s}
+                className="flex items-center text-gray-700 px-4 py-1 sm:text-lg text-sm sm:py-2 rounded-lg mb-1 sm:mb-2"
+              >
+                <FaCheckCircle className="text-indigo-600 mr-2 sm:mr-6 text-lg" />
+                {s}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <div className="flex items-center justify-around w-full md:w-auto gap-4 sm:mt-8 mt-4">
         <button
           className="btn-primary justify-self-center self-center p-2 sm:px-5
             sm:py-2.5 text-sm"
-          onClick={() => navigate(`/bookmark/add?lat=${lat}&lng=${lng}`)}
+          onClick={handleBookmark}
         >
-          Book Now{" "}
+          Book Now
         </button>
         <Link to={"/hotels/"}>
           <button className="btn-secondary text-sm p-2 sm:px-5 sm:py-2.5 sm:my-4 my-2">
@@ -62,6 +93,7 @@ function SingleHotel() {
           </button>
         </Link>
       </div>
+      {}
     </div>
   );
 }

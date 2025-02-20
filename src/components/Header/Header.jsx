@@ -6,31 +6,29 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { FiLogIn } from "react-icons/fi";
 import { HiCalendar, HiMinus, HiPlus, HiSearch } from "react-icons/hi";
+import { IoMdHome } from "react-icons/io";
 import { MdLocationOn } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthProvider";
+import { useDate } from "../../Context/ReservProvider";
 import { useOutSideClick } from "../../hook/useOutsideClick";
-import { IoMdHome } from "react-icons/io";
 
 function Header() {
   const { isAuthenticated } = useAuth();
-  const [openOption, setOpenOption] = useState(false);
-  const [openDate, setOpenDate] = useState(false);
+  const {
+    openDate,
+    setOpenDate,
+    date,
+    setDate,
+    option,
+    setOption,
+    openOption,
+    setOpenOption,
+  } = useDate();
   const [destination, setDestination] = useState("");
   const navigate = useNavigate();
-  const [option, setOption] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
-  });
-  const [date, setDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
+
   useEffect(() => {
     if (date[0].endDate !== date[0].startDate) {
       const timer = setTimeout(() => {
@@ -62,7 +60,16 @@ function Header() {
   };
   return (
     <div className="flex items-center justify-center gap-x-1 m-4 relative">
-      {isAuthenticated?<button className="absolute left-[1%] sm:left-[10%] btn-primary p-3 text-sm sm:text-[15px] mx-3  " onClick={()=>navigate("/")}><IoMdHome/></button>:""}
+      {isAuthenticated ? (
+        <button
+          className="absolute left-[1%] sm:left-[10%] btn-primary p-3 text-sm sm:text-[15px] mx-3  "
+          onClick={() => navigate("/")}
+        >
+          <IoMdHome />
+        </button>
+      ) : (
+        ""
+      )}
       <div
         className="p-4 flex flex-col md:flex-row w-full max-w-[900px] text-sm justify-between items-center gap-4 
         border border-gray-400  rounded-3xl"
@@ -134,7 +141,6 @@ function Header() {
           </button>
           <User />
         </div>
-        
       </div>
     </div>
   );
@@ -150,9 +156,12 @@ function User() {
   return (
     <div>
       {isAuthenticated ? (
-        <div >
-          <button className="btn-primary w-10 h-10 p-1 rounded-full flex justify-center items-center " onClick={handleLogout}>
-            <TbLogout2  className="w-5 h-5"/>
+        <div>
+          <button
+            className="btn-primary w-10 h-10 p-1 rounded-full flex justify-center items-center "
+            onClick={handleLogout}
+          >
+            <TbLogout2 className="w-5 h-5" />
           </button>
         </div>
       ) : (
@@ -162,11 +171,8 @@ function User() {
         >
           <FiLogIn className="w-5 h-5" />
         </button>
-        
       )}
-      
     </div>
-    
   );
 }
 
