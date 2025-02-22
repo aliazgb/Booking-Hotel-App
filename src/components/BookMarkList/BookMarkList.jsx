@@ -1,42 +1,75 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
-import { HiTrash } from "react-icons/hi";
-import { Link, useNavigate } from "react-router-dom";
+import { IoIosOptions } from "react-icons/io";
+import { MdOutlineDateRange } from "react-icons/md";
 import { useBookMark } from "../../Context/BookMarkProvider";
 import { useDate } from "../../Context/ReservProvider";
+import { MdDoneOutline } from "react-icons/md";
 
 function BookMarkList() {
-  const navigate = useNavigate();
-  const { bookmarks, currentBookMark, deleteBookmark } = useBookMark();
-  const { price, setPrice } = useDate();
-  const { finalPrice, setOpenOption, openOption, setOption } = useDate();
-  // const [option, setOption] = useDate();
-  const handleDelete = async (e, id) => {
-    e.preventDefault();
-    await deleteBookmark(id);
-    setPrice(0);
+  const { currentBookMark } = useBookMark();
+  const [selectId, setSelectID] = useState(null); 
+  const {
+    finalPrice,
+    setFinalPrice,
+    setOpenOption,
+    openOption,
+    setOpenDate,
+    setOption,
+    setDate,
+    option,
+    price,
+    setPrice,
+    kos,
+    setKos,
+  } = useDate();
+
+  useEffect(() => {
+    if (!openOption && selectId !== null) {
+      handleDoneifo(selectId);
+      setSelectID(null); 
+    }
+  }, [openOption]);
+
+  const handleDoneifo = (id) => {
+    const updatedKos = kos.map((f) =>
+      f.id === id
+        ? {
+            ...f,
+            option: {
+              adult: option.adult,
+              children: option.children,
+              room: option.room,
+            },
+          }
+        : f
+    );
+
+    setKos(updatedKos);
   };
-  
-  const handlesetOption = async (e, id) => {
+
+  const handleEditPerson = (e, id) => {
     e.preventDefault();
-    setOpenOption(!openOption);
-    const selectedBookmark = bookmarks.find((s) => s.id == id);
-    setPrice(selectedBookmark.price);
-    console.log(finalPrice)
-   
+
+    const selected = kos.find((s) => s.id === id);
+    if (selected) {
+      setOption(selected.option);
+      setPrice(selected.price);
+      setSelectID(id); 
+      setOpenOption(true);
+    }
   };
+
   return (
     <div className="w-full sm:w-[80%] m-2">
-      <h2 className="my-4 text-lg sm:text-xl">Bookmark List</h2>
-      <div className="mt-4">
-        {bookmarks.map((item) => {
-          const isCurrentBookmark = item.id === currentBookMark?.id;
-          return (
-            <Link
-              key={item.id}
-              to={`${item.id}?lat=${item.latitude}&lng=${item.longitude}`}
-            >
+      <h2 className="my-4 text-lg sm:text-xl">Bookmark List {finalPrice}</h2>
+      <div>
+        <div className="mt-4">
+          {kos.map((item) => {
+            const isCurrentBookmark = item.id === currentBookMark?.id;
+            return (
               <div
+                key={item.id}
                 className={`text-sm sm:text-lg mb-4 border-1 border-gray-400 rounded-xl p-1 sm:p-4
                     flex items-center justify-between
                     ${
@@ -47,30 +80,26 @@ function BookMarkList() {
                     sm:flex-row sm:space-x-4`}
               >
                 <div className="mx-1">
-                  <ReactCountryFlag
-                    className=""
-                    svg
-                    countryCode={item.countryCode}
-                  />
-                  &nbsp; <strong className="">{item.cityName}</strong> &nbsp;
+                  <ReactCountryFlag svg countryCode={item.countryCode} />
+                  &nbsp; <strong>{item.cityName}</strong> &nbsp;
                   <span className="text-xs sm:text-lg">{item.country}</span>
                 </div>
-                <button onClick={(e) => handlesetOption(e, item.id)}>
-             
-                  <p>{item.finalPrice}</p>
-                </button>
-                <button onClick={(e) => handleDelete(e, item.id)}>
-                  <HiTrash className="text-rose-500 cursor-pointer w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
+
+                <div>
+                  <span className="mr-4">قیمت: {item.finalPrice || "بدون قیمت"}</span>
+                  <button className="mr-8" onClick={(e) => handleEditPerson(e, item.id)}>
+                    <IoIosOptions />
+                  </button>
+                  <button onClick={() => handleDoneifo(item.id)}>
+                    <MdDoneOutline />
+                  </button>
+                </div>
               </div>
-            </Link>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-      <button
-        className="btn-primary sm:py-2 sm:px-8 p-1 text-sm sm:text-lg"
-        onClick={() => navigate("/hotels")}
-      >
+      <button className="btn-primary sm:py-2 sm:px-8 p-1 text-sm sm:text-lg">
         Recommended ...
       </button>
     </div>

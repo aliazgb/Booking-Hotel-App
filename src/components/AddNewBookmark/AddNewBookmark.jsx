@@ -19,7 +19,8 @@ function AddNewBookmark() {
   const [geoCodingError, setGeoCodingError] = useState(null);
   const [isLoadingGeoCoding, setIsLoadingGeoCoding, priceof] = useState(false);
   const { createBookmark } = useBookMark();
-  const { differenceInDays, option, setOpenDate, finalPrice } = useDate();
+  const { differenceInDays, option, setOpenDate, finalPrice, setOption ,kos , setKos} =
+    useDate();
 
   useEffect(() => {
     if (!lat || !lng) return;
@@ -48,12 +49,12 @@ function AddNewBookmark() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!price) {
-     return navigate("/hotels");
+      return navigate("/hotels");
     }
-    if (finalPrice == 0) {
-      return setOpenDate(true);
-    }
-   
+    // if (finalPrice == 0) {
+    //   return setOpenDate(true);
+    // }
+
     navigate(`/bookmark/add?lat=${lat}&lng=${lng}&price=${finalPrice}`);
     const newBookmark = {
       cityName,
@@ -61,13 +62,15 @@ function AddNewBookmark() {
       countryCode,
       latitude: lat,
       longitude: lng,
+      id:Date.now(),
       host_location: cityName + " " + country,
       price,
-      finalPrice
-      
+      finalPrice,
+      option,
     };
-    await createBookmark(newBookmark);
 
+    // await createBookmark(newBookmark);
+    setKos((prevKos) => [...prevKos, newBookmark]);
     navigate("/bookmark");
   };
 
@@ -121,7 +124,7 @@ function AddNewBookmark() {
             back
           </button>
           <button className="btn-primary py-2 px-4">
-            {finalPrice == 0 ? "Add" : "Continue"}
+            add
           </button>
         </div>
       </form>

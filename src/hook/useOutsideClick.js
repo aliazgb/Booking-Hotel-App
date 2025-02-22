@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 
 export function useOutSideClick(ref, cb,exceptionId) {
-  console.log(ref.current)
   useEffect(() => {
     function handleClick(e) {
       if (
