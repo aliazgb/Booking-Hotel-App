@@ -91,7 +91,7 @@ function Header() {
               <HiCalendar className="text-indigo-600" />
               <div
                 className="ml-0.5 text-sm"
-                onClick={() => setOpenDate(!openDate)}
+                onClick={() => setOpenDate((s)=>!s)}
               >
                 {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
                   date[0].endDate,

@@ -19,8 +19,7 @@ function AddNewBookmark() {
   const [geoCodingError, setGeoCodingError] = useState(null);
   const [isLoadingGeoCoding, setIsLoadingGeoCoding, priceof] = useState(false);
   const { createBookmark } = useBookMark();
-  const { differenceInDays, option, setOpenDate, finalPrice, setOption ,kos , setKos} =
-    useDate();
+  const { option, finalPrice, setBookmarkedPlaces, date, setDate } = useDate();
 
   useEffect(() => {
     if (!lat || !lng) return;
@@ -62,7 +61,8 @@ function AddNewBookmark() {
       countryCode,
       latitude: lat,
       longitude: lng,
-      id:Date.now(),
+      id: Date.now(),
+      date,
       host_location: cityName + " " + country,
       price,
       finalPrice,
@@ -70,7 +70,15 @@ function AddNewBookmark() {
     };
 
     // await createBookmark(newBookmark);
-    setKos((prevKos) => [...prevKos, newBookmark]);
+
+    setBookmarkedPlaces((prevKos) => [...prevKos, newBookmark]);
+    setDate([
+      {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: "selection",
+      },
+    ]);
     navigate("/bookmark");
   };
 
@@ -123,9 +131,7 @@ function AddNewBookmark() {
           >
             back
           </button>
-          <button className="btn-primary py-2 px-4">
-            add
-          </button>
+          <button className="btn-primary py-2 px-4">add</button>
         </div>
       </form>
     </div>

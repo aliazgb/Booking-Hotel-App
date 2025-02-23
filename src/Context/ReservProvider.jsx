@@ -4,8 +4,8 @@ const DateContext = createContext();
 
 export const DateProvider = ({ children }) => {
   const [openOption, setOpenOption] = useState(false);
-  const [kos, setKos] = useState(() => []);
-  const [openDate, setOpenDate] = useState(false);
+  const [bookmarkedPlaces , setBookmarkedPlaces] = useState(() => []);
+  const [openDate, setOpenDate] = useState();
   const [price, setPrice] = useState(0);
   const [finalPrice, setFinalPrice] = useState(0);
 
@@ -22,23 +22,6 @@ export const DateProvider = ({ children }) => {
     },
   ]);
 
-  useEffect(() => {
-    const differenceInDays = Math.max(
-      Math.floor((date[0].endDate - date[0].startDate) / (1000 * 60 * 60 * 24))
-    );
-    const basePrice = (Number(price) || 0) * differenceInDays;
-
-    const extraAdultPrice =
-      option.adult > 1 ? (option.adult - 1) * 0.2 * basePrice : 0;
-
-    const extraChildrenPrice =
-      option.children > 0 ? option.children * 0.1 * basePrice : 0;
-
-    setFinalPrice(
-      (basePrice + extraAdultPrice + extraChildrenPrice).toFixed(2)
-    );
-  }, [price, option, date]);
-
   return (
     <DateContext.Provider
       value={{
@@ -53,9 +36,9 @@ export const DateProvider = ({ children }) => {
         setPrice,
         openOption,
         setOpenOption,
-        setKos,
-        kos,
-        setFinalPrice
+        setBookmarkedPlaces,
+        bookmarkedPlaces ,
+        setFinalPrice,
       }}
     >
       {children}

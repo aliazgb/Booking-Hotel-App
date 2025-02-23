@@ -1,38 +1,38 @@
 import React, { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
+import { CiCalendarDate } from "react-icons/ci";
 import { IoIosOptions } from "react-icons/io";
-import { MdOutlineDateRange } from "react-icons/md";
 import { useBookMark } from "../../Context/BookMarkProvider";
 import { useDate } from "../../Context/ReservProvider";
-import { MdDoneOutline } from "react-icons/md";
 
 function BookMarkList() {
   const { currentBookMark } = useBookMark();
-  const [selectId, setSelectID] = useState(null); 
+  const [selectId, setSelectID] = useState(null);
+  const [selectedDateId, setSelectedDateId] = useState(null);
   const {
     finalPrice,
-    setFinalPrice,
     setOpenOption,
     openOption,
-    setOpenDate,
     setOption,
-    setDate,
-    option,
-    price,
     setPrice,
-    kos,
-    setKos,
+    bookmarkedPlaces ,
+    setBookmarkedPlaces,
+    option,
+    date,
+    setDate,
+    openDate,
+    setOpenDate,
   } = useDate();
 
   useEffect(() => {
     if (!openOption && selectId !== null) {
       handleDoneifo(selectId);
-      setSelectID(null); 
+      setSelectID(null);
     }
   }, [openOption]);
 
   const handleDoneifo = (id) => {
-    const updatedKos = kos.map((f) =>
+    const updateBookmarkedPlaces  = bookmarkedPlaces .map((f) =>
       f.id === id
         ? {
             ...f,
@@ -45,32 +45,77 @@ function BookMarkList() {
         : f
     );
 
-    setKos(updatedKos);
+    setBookmarkedPlaces(updateBookmarkedPlaces);
   };
+
+  const handleDoneDate = (id) => {
+    setDate([
+      {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: "selection",
+      },
+    ]);
+    const dada=date
+    const updateBookmarkedPlaces  = bookmarkedPlaces .map((f) =>
+      f.id === id
+        ? {
+            ...f,
+            date:dada,
+          }
+        : f
+    );
+    setBookmarkedPlaces(updateBookmarkedPlaces);
+    console.log(updateBookmarkedPlaces);
+  };
+
+  useEffect(() => {
+    if (!openDate && selectedDateId !== null) {
+      handleDoneDate(selectedDateId);
+      setSelectedDateId(null);
+    }
+  }, [openDate]);
 
   const handleEditPerson = (e, id) => {
     e.preventDefault();
 
-    const selected = kos.find((s) => s.id === id);
+    const selected = bookmarkedPlaces.find((s) => s.id === id);
     if (selected) {
       setOption(selected.option);
       setPrice(selected.price);
-      setSelectID(id); 
+      setSelectID(id);
       setOpenOption(true);
     }
   };
-
+  const handleEditDate = (id) => {
+    setOpenDate(true);
+    setSelectedDateId(id);
+  };
   return (
     <div className="w-full sm:w-[80%] m-2">
-      <h2 className="my-4 text-lg sm:text-xl">Bookmark List {finalPrice}</h2>
+      <h2 className="my-4 text-lg sm:text-xl">Bookmark List{finalPrice}</h2>
       <div>
         <div className="mt-4">
-          {kos.map((item) => {
+          {bookmarkedPlaces.map((item) => {
             const isCurrentBookmark = item.id === currentBookMark?.id;
+            const differenceInDays = Math.floor(
+              (item.date[0].endDate - item.date[0].startDate) /
+                (1000 * 60 * 60 * 24)
+            );
+            const basePrice = (Number(item.price) || 0) * differenceInDays;
+            const extraAdultPrice =
+              item.option.adult > 1
+                ? (item.option.adult - 1) * 0.2 * basePrice
+                : 0;
+            const extraChildrenPrice =
+              item.option.children > 0
+                ? item.option.children * 0.1 * basePrice
+                : 0;
+
             return (
               <div
                 key={item.id}
-                className={`text-sm sm:text-lg mb-4 border-1 border-gray-400 rounded-xl p-1 sm:p-4
+                className={`text-sm sm:text-lg mb-4 border border-gray-400 rounded-xl p-1 sm:p-4
                     flex items-center justify-between
                     ${
                       isCurrentBookmark
@@ -86,12 +131,15 @@ function BookMarkList() {
                 </div>
 
                 <div>
-                  <span className="mr-4">قیمت: {item.finalPrice || "بدون قیمت"}</span>
-                  <button className="mr-8" onClick={(e) => handleEditPerson(e, item.id)}>
+                  {basePrice + extraAdultPrice + extraChildrenPrice}
+                  <button
+                    className="mr-8"
+                    onClick={(e) => handleEditPerson(e, item.id)}
+                  >
                     <IoIosOptions />
                   </button>
-                  <button onClick={() => handleDoneifo(item.id)}>
-                    <MdDoneOutline />
+                  <button onClick={() => handleEditDate(item.id)}>
+                    <CiCalendarDate />
                   </button>
                 </div>
               </div>
