@@ -11,7 +11,7 @@ import { MdLocationOn } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthProvider";
-import { useDate } from "../../Context/ReservProvider";
+import { useReserve } from "../../Context/ReservProvider";
 import { useOutSideClick } from "../../hook/useOutsideClick";
 
 function Header() {
@@ -25,7 +25,7 @@ function Header() {
     setOption,
     openOption,
     setOpenOption,
-  } = useDate();
+  } = useReserve();
   const [destination, setDestination] = useState("");
   const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ function Header() {
     if (date[0].endDate !== date[0].startDate) {
       const timer = setTimeout(() => {
         setOpenDate(false);
-      }, 1000);
+      }, 200);
 
       return () => clearTimeout(timer);
     }
@@ -91,7 +91,7 @@ function Header() {
               <HiCalendar className="text-indigo-600" />
               <div
                 className="ml-0.5 text-sm"
-                onClick={() => setOpenDate((s)=>!s)}
+                onClick={() => setOpenDate((s) => !s)}
               >
                 {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
                   date[0].endDate,
@@ -202,6 +202,9 @@ function GuestOptionList({ option, handleOption, setOpenOption }) {
         minLimit={1}
         handleOption={handleOption}
       />
+      <div> 
+        <button onClick={()=>setOpenOption(false)} className="btn btn-primary px-2 py-1">apply</button>
+      </div>
     </div>
   );
 }

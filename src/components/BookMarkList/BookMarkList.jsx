@@ -2,27 +2,29 @@ import React, { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { CiCalendarDate } from "react-icons/ci";
 import { IoIosOptions } from "react-icons/io";
-import { useBookMark } from "../../Context/BookMarkProvider";
-import { useDate } from "../../Context/ReservProvider";
+import { RxCross2 } from "react-icons/rx";
+import { Link, useNavigate } from "react-router-dom";
+import { useReserve } from "../../Context/ReservProvider";
 
 function BookMarkList() {
-  const { currentBookMark } = useBookMark();
+  const [current, setCurrent] = useState();
   const [selectId, setSelectID] = useState(null);
   const [selectedDateId, setSelectedDateId] = useState(null);
+  const navigate = useNavigate();
   const {
-    finalPrice,
     setOpenOption,
     openOption,
     setOption,
     setPrice,
-    bookmarkedPlaces ,
+    bookmarkedPlaces,
     setBookmarkedPlaces,
     option,
     date,
     setDate,
     openDate,
     setOpenDate,
-  } = useDate();
+    final,
+  } = useReserve();
 
   useEffect(() => {
     if (!openOption && selectId !== null) {
@@ -32,7 +34,7 @@ function BookMarkList() {
   }, [openOption]);
 
   const handleDoneifo = (id) => {
-    const updateBookmarkedPlaces  = bookmarkedPlaces .map((f) =>
+    const updateBookmarkedPlaces = bookmarkedPlaces.map((f) =>
       f.id === id
         ? {
             ...f,
@@ -46,6 +48,7 @@ function BookMarkList() {
     );
 
     setBookmarkedPlaces(updateBookmarkedPlaces);
+    final(updateBookmarkedPlaces, id);
   };
 
   const handleDoneDate = (id) => {
@@ -56,17 +59,17 @@ function BookMarkList() {
         key: "selection",
       },
     ]);
-    const dada=date
-    const updateBookmarkedPlaces  = bookmarkedPlaces .map((f) =>
+    const editDate = date;
+    const updateBookmarkedPlaces = bookmarkedPlaces.map((f) =>
       f.id === id
         ? {
             ...f,
-            date:dada,
+            date: editDate,
           }
         : f
     );
     setBookmarkedPlaces(updateBookmarkedPlaces);
-    console.log(updateBookmarkedPlaces);
+    final(updateBookmarkedPlaces, id);
   };
 
   useEffect(() => {
@@ -78,78 +81,93 @@ function BookMarkList() {
 
   const handleEditPerson = (e, id) => {
     e.preventDefault();
-
     const selected = bookmarkedPlaces.find((s) => s.id === id);
     if (selected) {
-      setOption(selected.option);
+      setOption(selected.option); 
       setPrice(selected.price);
       setSelectID(id);
       setOpenOption(true);
     }
   };
-  const handleEditDate = (id) => {
+
+  const handleEditDate = (id, date) => {
     setOpenDate(true);
     setSelectedDateId(id);
   };
+  const handleDelete = (id) => {
+    const reserveDelete = bookmarkedPlaces.filter((f) => f.id !== id);
+    setBookmarkedPlaces(reserveDelete);
+  };
+
+  const totalPrice = bookmarkedPlaces.reduce((acc, item) => acc + item.finalPrice, 0)
   return (
     <div className="w-full sm:w-[80%] m-2">
-      <h2 className="my-4 text-lg sm:text-xl">Bookmark List{finalPrice}</h2>
+      <h2 className="my-4 text-lg sm:text-xl">Bookmark List</h2>
       <div>
         <div className="mt-4">
           {bookmarkedPlaces.map((item) => {
-            const isCurrentBookmark = item.id === currentBookMark?.id;
-            const differenceInDays = Math.floor(
-              (item.date[0].endDate - item.date[0].startDate) /
-                (1000 * 60 * 60 * 24)
-            );
-            const basePrice = (Number(item.price) || 0) * differenceInDays;
-            const extraAdultPrice =
-              item.option.adult > 1
-                ? (item.option.adult - 1) * 0.2 * basePrice
-                : 0;
-            const extraChildrenPrice =
-              item.option.children > 0
-                ? item.option.children * 0.1 * basePrice
-                : 0;
-
             return (
-              <div
+              <Link
                 key={item.id}
-                className={`text-sm sm:text-lg mb-4 border border-gray-400 rounded-xl p-1 sm:p-4
+                to={`/bookmark/?lat=${item.latitude}&lng=${item.longitude}`}
+              >
+                <div
+                  onClick={() => setCurrent(item.id)}
+                  className={`text-sm sm:text-lg mb-4 border border-gray-400 rounded-xl p-1 sm:p-4
                     flex items-center justify-between
                     ${
-                      isCurrentBookmark
+                      current == item.id
                         ? "border-2 border-indigo-600 bg-text-100"
                         : ""
                     }
                     sm:flex-row sm:space-x-4`}
-              >
-                <div className="mx-1">
-                  <ReactCountryFlag svg countryCode={item.countryCode} />
-                  &nbsp; <strong>{item.cityName}</strong> &nbsp;
-                  <span className="text-xs sm:text-lg">{item.country}</span>
-                </div>
+                >
+                  <div className="mx-1">
+                    <ReactCountryFlag svg countryCode={item.countryCode} />
+                    &nbsp; <strong>{item.cityName}</strong> &nbsp;
+                    <span className="text-xs sm:text-lg">{item.country}</span>
+                  </div>
+                  <div>
+                    <span>
+                      {
+                        bookmarkedPlaces.find((f) => f.id == item.id)
+                          ?.finalPrice
+                      }{" "}
+                      &euro;
+                    </span>
+                  </div>
+                  <div className="flex justify-between gap-3.5">
+                    <button
+                      className=""
+                      onClick={(e) => handleEditPerson(e, item.id)}
+                    >
+                      <IoIosOptions />
+                    </button>
+                    <button onClick={() => handleEditDate(item.id, item.date)}>
+                      <CiCalendarDate />
+                    </button>
 
-                <div>
-                  {basePrice + extraAdultPrice + extraChildrenPrice}
-                  <button
-                    className="mr-8"
-                    onClick={(e) => handleEditPerson(e, item.id)}
-                  >
-                    <IoIosOptions />
-                  </button>
-                  <button onClick={() => handleEditDate(item.id)}>
-                    <CiCalendarDate />
-                  </button>
+                    <button onClick={() => handleDelete(item.id)}>
+                      <RxCross2 />
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
       </div>
-      <button className="btn-primary sm:py-2 sm:px-8 p-1 text-sm sm:text-lg">
-        Recommended ...
-      </button>
+      <div className="flex justify-between">
+        <button
+          className="btn-primary sm:py-2 sm:px-8 p-1 text-sm sm:text-lg"
+          onClick={() => navigate("/hotels")}
+        >
+          available hotels ...
+        </button>
+        <div>
+          <span>TOTAL : {totalPrice}</span>
+        </div>
+      </div>
     </div>
   );
 }

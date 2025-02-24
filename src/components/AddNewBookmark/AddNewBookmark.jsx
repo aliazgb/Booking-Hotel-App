@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useBookMark } from "../../Context/BookMarkProvider";
-import { useDate } from "../../Context/ReservProvider";
+import { useReserve } from "../../Context/ReservProvider";
 import useUrlLocation from "../../hook/useUrlLocation";
 import Loader from "../Loader/Loader";
+import { useBookMark } from "../../Context/BookMarkProvider";
 const BASE_GEOCODING_URL =
   "https://us1.api-bdc.net/data/reverse-geocode-client";
 function AddNewBookmark() {
@@ -17,9 +17,16 @@ function AddNewBookmark() {
   const [country, setCountry] = useState("");
   const [countryCode, setCountryCode] = useState("");
   const [geoCodingError, setGeoCodingError] = useState(null);
+ const {createBookmark}= useBookMark()
   const [isLoadingGeoCoding, setIsLoadingGeoCoding, priceof] = useState(false);
-  const { createBookmark } = useBookMark();
-  const { option, finalPrice, setBookmarkedPlaces, date, setDate } = useDate();
+  const {
+    option,
+    finalPrice,
+    setBookmarkedPlaces,
+    date,
+    setDate,
+    setOpenDate,
+  } = useReserve();
 
   useEffect(() => {
     if (!lat || !lng) return;
@@ -45,16 +52,11 @@ function AddNewBookmark() {
     }
     fetchLocationData();
   }, [lat, lng]);
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!price) {
-      return navigate("/hotels");
-    }
-    // if (finalPrice == 0) {
-    //   return setOpenDate(true);
-    // }
-
-    navigate(`/bookmark/add?lat=${lat}&lng=${lng}&price=${finalPrice}`);
+    const differenceInDays = Math.floor(
+      (date[0].endDate - date[0].startDate) / (1000 * 60 * 60 * 24) *price
+    );
     const newBookmark = {
       cityName,
       country,
@@ -65,12 +67,16 @@ function AddNewBookmark() {
       date,
       host_location: cityName + " " + country,
       price,
-      finalPrice,
+      finalPrice:differenceInDays,
       option,
     };
+    const dateDifference = date[0].endDate - date[0].startDate;
+    if (dateDifference == 0) {
+      return setOpenDate(true);
+    }
 
-    // await createBookmark(newBookmark);
-
+    // navigate(`/bookmark/add?lat=${lat}&lng=${lng}`);
+    createBookmark(newBookmark)
     setBookmarkedPlaces((prevKos) => [...prevKos, newBookmark]);
     setDate([
       {
@@ -79,7 +85,8 @@ function AddNewBookmark() {
         key: "selection",
       },
     ]);
-    navigate("/bookmark");
+
+    navigate(`${price?"/bookmark":"/hotels"}`);
   };
 
   if (isLoadingGeoCoding) {

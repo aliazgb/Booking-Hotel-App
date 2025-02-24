@@ -2,25 +2,23 @@ import React, { useEffect } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { UseHotels } from "../../Context/HotelsProvider";
-import { useDate } from "../../Context/ReservProvider";
+import { useReserve } from "../../Context/ReservProvider";
 import useUrlLocation from "../../hook/useUrlLocation";
 import Loader from "../Loader/Loader";
 function SingleHotel() {
   const { id } = useParams();
   const { getHotel, isLoadingHotel, dataHotel } = UseHotels();
   const [lat, lng] = useUrlLocation();
-  const { setPrice } = useDate();
+  const { setPrice } = useReserve();
   const star = dataHotel.number_of_reviews || 0;
   const navigate = useNavigate();
   useEffect(() => {
     getHotel(id);
   }, [id]);
   const handleBookmark = () => {
-    setPrice(dataHotel.price)
+    setPrice(dataHotel.price);
     navigate(
-      `/bookmark/add?lat=${lat}&lng=${lng}&price=${
-        dataHotel ? dataHotel.price : ""
-      }`
+      `/bookmark/add?lat=${lat}&lng=${lng}&price=${dataHotel.price}`
     );
   };
   const amenities = dataHotel.amenities || [];
