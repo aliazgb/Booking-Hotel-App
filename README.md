@@ -1,22 +1,20 @@
-Hotel Booking Platform 🌍
-🚀 Live Demo:https://booking-hotel-app-gldp.vercel.app/
+# Hotel Booking Platform 🌍  
 
-🚀 Key Features
-Interactive Map (Leaflet.js) – Display hotel locations on a map
-Advanced Search (Date/Guests Filters) – Filter by date and number of guests
-State Management (Context API) – Manage application data efficiently
-Protected Routes (Authentication) – Secure routes for logged-in users
-Bookmark System – Save favorite locations in the bookmark list
+🚀 **Live Demo:** [Booking Hotel App](https://booking-hotel-app-gldp.vercel.app/)  
 
-🛠 Tech Stack
-React · React Router · Leaflet.js · Tailwind CSS · Axios 
+## 🚀 Features  
+- **Interactive Map (Leaflet.js)** – Browse hotel locations easily on a map  
+- **Advanced Search (Date/Guests Filters)** – Filter results based on date and number of guests  
+- **State Management (Context API)** – Smooth and efficient data handling  
+- **Protected Routes (Authentication)** – Secure pages accessible only to logged-in users  
+- **Bookmark System** – Save favorite hotels for quick access later  
 
-🎨 Styling
-The styling is implemented using Tailwind CSS.
-The application is fully responsive and adapts to different devices.
+## 🛠 Tech Stack  
+Built using **React**, **React Router**, **Leaflet.js**, **Tailwind CSS**, and **Axios**.  
 
-🔒 Security Note
-LocalStorage Usage:
-This is a training project. For simplicity, authentication is implemented using localStorage.
+## 🎨 Styling  
+The UI is designed with **Tailwind CSS**, ensuring full responsiveness across different devices.  
 
-➡️ In a production environment, JWT or Auth0 would be used.
+## 🔒 Security Note  
+Authentication is currently managed via **localStorage** for simplicity.  
+🔹 In a real-world scenario, secure authentication methods like **JWT or Auth0** would be implemented instead.  
