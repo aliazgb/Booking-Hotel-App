@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
-import { CiCalendarDate } from "react-icons/ci";
-import { IoIosOptions } from "react-icons/io";
-import { RxCross2 } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import { useReserve } from "../../Context/ReservProvider";
+import BookmarkActions from "../BookmarkActions/bookMarkActions";
 
 function BookMarkList() {
   const [current, setCurrent] = useState();
@@ -15,15 +13,15 @@ function BookMarkList() {
     setOpenOption,
     openOption,
     setOption,
+    option,
     setPrice,
     bookmarkedPlaces,
     setBookmarkedPlaces,
-    option,
     date,
     setDate,
     openDate,
     setOpenDate,
-    final,
+    getTotalBookingPrice,
   } = useReserve();
 
   useEffect(() => {
@@ -48,7 +46,7 @@ function BookMarkList() {
     );
 
     setBookmarkedPlaces(updateBookmarkedPlaces);
-    final(updateBookmarkedPlaces, id);
+    getTotalBookingPrice(updateBookmarkedPlaces, id);
   };
 
   const handleDoneDate = (id) => {
@@ -69,7 +67,7 @@ function BookMarkList() {
         : f
     );
     setBookmarkedPlaces(updateBookmarkedPlaces);
-    final(updateBookmarkedPlaces, id);
+    getTotalBookingPrice(updateBookmarkedPlaces, id);
   };
 
   useEffect(() => {
@@ -83,14 +81,14 @@ function BookMarkList() {
     e.preventDefault();
     const selected = bookmarkedPlaces.find((s) => s.id === id);
     if (selected) {
-      setOption(selected.option); 
+      setOption(selected.option);
       setPrice(selected.price);
       setSelectID(id);
       setOpenOption(true);
     }
   };
 
-  const handleEditDate = (id, date) => {
+  const handleEditDate = (id) => {
     setOpenDate(true);
     setSelectedDateId(id);
   };
@@ -99,7 +97,10 @@ function BookMarkList() {
     setBookmarkedPlaces(reserveDelete);
   };
 
-  const totalPrice = bookmarkedPlaces.reduce((acc, item) => acc + item.finalPrice, 0)
+  const totalPrice = bookmarkedPlaces.reduce(
+    (acc, item) => acc + item.finalPrice,
+    0
+  );
   return (
     <div className="w-full sm:w-[80%] m-2">
       <h2 className="my-4 text-lg sm:text-xl">Bookmark List</h2>
@@ -128,6 +129,8 @@ function BookMarkList() {
                     <span className="text-xs sm:text-lg">{item.country}</span>
                   </div>
                   <div>
+                    <span>For {item.differenceInDays} night</span>
+
                     <span>
                       {
                         bookmarkedPlaces.find((f) => f.id == item.id)
@@ -136,21 +139,12 @@ function BookMarkList() {
                       &euro;
                     </span>
                   </div>
-                  <div className="flex justify-between gap-3.5">
-                    <button
-                      className=""
-                      onClick={(e) => handleEditPerson(e, item.id)}
-                    >
-                      <IoIosOptions />
-                    </button>
-                    <button onClick={() => handleEditDate(item.id, item.date)}>
-                      <CiCalendarDate />
-                    </button>
-
-                    <button onClick={() => handleDelete(item.id)}>
-                      <RxCross2 />
-                    </button>
-                  </div>
+                  <BookmarkActions
+                    handleEditPerson={handleEditPerson}
+                    handleEditDate={handleEditDate}
+                    handleDelete={handleDelete}
+                    item={item}
+                  />
                 </div>
               </Link>
             );

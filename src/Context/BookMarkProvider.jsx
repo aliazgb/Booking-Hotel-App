@@ -9,7 +9,7 @@ const initialState = {
   bookmarks: [],
   currentBookMark: null,
 };
-const BASE_URL = "https://server-9-fixd.onrender.com";
+const BASE_URL = "https://server-1-ej86.onrender.com";
 
 function bookmarkReducer(state, actions) {
   switch (actions.type) {
@@ -24,6 +24,13 @@ function bookmarkReducer(state, actions) {
         isLoading: false,
         currentBookMark: actions.payload,
       };
+      case "currentBookMark/edit":
+        return {
+          ...state,
+          isLoading: false,
+          currentBookMark: actions.payload,
+          bookmarks: [...state.bookmarks, actions.payload],
+        };
     case "bookmark/loaded":
       return {
         isLoading: false,
@@ -85,6 +92,16 @@ function BookMarkProviderList({ children }) {
       toast.error(error.message);
     }
   }
+  async function editBookmark(id,data) {
+    try {
+      console.log(data)
+      await axios.put(`${BASE_URL}/bookmarks/${id}`);
+      dispatch({ type: "currentBookMark/edit",payload:data });
+      // setBookmarks((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
   return (
     <BookMarkContext.Provider
       value={{
@@ -94,6 +111,7 @@ function BookMarkProviderList({ children }) {
         getBookmark,
         bookmarks,
         deleteBookmark,
+        editBookmark
       }}
     >
       {children}

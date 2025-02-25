@@ -20,20 +20,25 @@ export const DateProvider = ({ children }) => {
     },
   ]);
 
-  function final(date, id) {
-    const of = date.find((f) => f.id == id);
-    if (of) {
+  function getTotalBookingPrice(date, id) {
+    const selectedHotel = date.find((f) => f.id == id);
+    if (selectedHotel) {
       const differenceInDays = Math.floor(
-        (of.date[0].endDate - of.date[0].startDate) / (1000 * 60 * 60 * 24) || 1
+        (selectedHotel.date[0].endDate - selectedHotel.date[0].startDate) /
+          (1000 * 60 * 60 * 24) || 1
       );
-      const basePrice = (Number(of.price) || 0) * differenceInDays;
+      const basePrice = (Number(selectedHotel.price) || 0) * differenceInDays;
       const extraAdultPrice =
-        of.option.adult > 1 ? (of.option.adult - 1) * 0.2 * basePrice : 0;
+        selectedHotel.option.adult > 1
+          ? (selectedHotel.option.adult - 1) * 0.2 * basePrice
+          : 0;
       const extraChildrenPrice =
-        of.option.children > 0 ? of.option.children * 0.1 * basePrice : 0;
+        selectedHotel.option.children > 0
+          ? selectedHotel.option.children * 0.1 * basePrice
+          : 0;
       const finalPrice = basePrice + extraAdultPrice + extraChildrenPrice;
-      of.finalPrice =finalPrice;
-     
+      selectedHotel.finalPrice = finalPrice;
+      selectedHotel.differenceInDays = differenceInDays;
     }
   }
 
@@ -52,7 +57,7 @@ export const DateProvider = ({ children }) => {
         setOpenOption,
         setBookmarkedPlaces,
         bookmarkedPlaces,
-        final,
+        getTotalBookingPrice,
       }}
     >
       {children}

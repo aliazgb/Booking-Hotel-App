@@ -1,61 +1,30 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReactCountryFlag from "react-country-flag";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useReserve } from "../../Context/ReservProvider";
+import { useGeocode } from "../../hook/useGeoCode";
 import useUrlLocation from "../../hook/useUrlLocation";
+import { calculateFinalPrice } from "../../utils/utils";
 import Loader from "../Loader/Loader";
 import { useBookMark } from "../../Context/BookMarkProvider";
-const BASE_GEOCODING_URL =
-  "https://us1.api-bdc.net/data/reverse-geocode-client";
 function AddNewBookmark() {
   const navigate = useNavigate();
   const [lat, lng] = useUrlLocation();
+  const {createBookmark}=useBookMark()
   const [searchParams, setSearchParams] = useSearchParams();
   const price = searchParams.get("price");
-  const [cityName, setCityName] = useState("");
-  const [country, setCountry] = useState("");
-  const [countryCode, setCountryCode] = useState("");
-  const [geoCodingError, setGeoCodingError] = useState(null);
- const {createBookmark}= useBookMark()
-  const [isLoadingGeoCoding, setIsLoadingGeoCoding, priceof] = useState(false);
-  const {
-    option,
-    finalPrice,
-    setBookmarkedPlaces,
-    date,
-    setDate,
-    setOpenDate,
-  } = useReserve();
+  const { option, setBookmarkedPlaces, date, setDate, setOpenDate } =
+    useReserve();
 
-  useEffect(() => {
-    if (!lat || !lng) return;
+  const { cityName, country, countryCode, isLoadingGeoCoding, geoCodingError } =
+    useGeocode(lat, lng);
 
-    async function fetchLocationData() {
-      setIsLoadingGeoCoding(true);
-      setGeoCodingError(null);
-      try {
-        const { data } = await axios.get(
-          `${BASE_GEOCODING_URL}?latitude=${lat}&longitude=${lng}`
-        );
-        setCityName(data.city);
-        setCountry(data.countryName);
-        setCountryCode(data.countryCode);
-        if (!data.countryCode) {
-          throw new Error("✖ this location is not a city ! ✖");
-        }
-      } catch (error) {
-        setGeoCodingError(error.message);
-      } finally {
-        setIsLoadingGeoCoding(false);
-      }
-    }
-    fetchLocationData();
-  }, [lat, lng]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    const differenceInDays = Math.floor(
-      (date[0].endDate - date[0].startDate) / (1000 * 60 * 60 * 24) *price
+    const { differenceInDays, finalPrice } = calculateFinalPrice(
+      date[0].startDate,
+      date[0].endDate,
+      price
     );
     const newBookmark = {
       cityName,
@@ -67,15 +36,13 @@ function AddNewBookmark() {
       date,
       host_location: cityName + " " + country,
       price,
-      finalPrice:differenceInDays,
+      finalPrice,
       option,
+      differenceInDays,
     };
-    const dateDifference = date[0].endDate - date[0].startDate;
-    if (dateDifference == 0) {
+    if (differenceInDays == 0) {
       return setOpenDate(true);
     }
-
-    // navigate(`/bookmark/add?lat=${lat}&lng=${lng}`);
     createBookmark(newBookmark)
     setBookmarkedPlaces((prevKos) => [...prevKos, newBookmark]);
     setDate([
@@ -86,7 +53,7 @@ function AddNewBookmark() {
       },
     ]);
 
-    navigate(`${price?"/bookmark":"/hotels"}`);
+    navigate(`${price ? "/bookmark" : "/hotels"}`);
   };
 
   if (isLoadingGeoCoding) {
