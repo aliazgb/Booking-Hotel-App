@@ -17,38 +17,35 @@ function BookmarkActions({
         <strong className="text-lg text-gray-800">{item.cityName}</strong>
         <ReactCountryFlag className="mx-2" svg countryCode={item.countryCode} />
       </div>
-      <div
-        onClick={() => handleEditDate(item.id, item.date)}
-        className="flex justify-between items-center text-gray-600 text-sm sm:text-lg"
-      >
+      <div className="flex justify-between items-center text-gray-600 text-sm sm:text-lg">
         <span>For {item.differenceInDays} nights</span>
-        <button>
+        <button onClick={() => handleEditDate(item.id, item.date)}>
           <IoCalendarClearOutline
             className="cursor-pointer hover:text-indigo-700 transition-all duration-300 ease-in-out"
             size={22}
           />
         </button>
       </div>
-      <div
-        onClick={(e) => handleEditPerson(e, item.id)}
-        className="flex items-center justify-between text-gray-600 text-sm sm:text-lg"
-      >
+      <div className="flex items-center justify-between text-gray-600 text-sm sm:text-lg">
         <span>
           {item.option.adult} adult - {item.option.children} children
         </span>
-        <button className="text-gray-600 hover:text-indigo-700 transition-all duration-300 ease-in-out">
+        <button
+          onClick={(e) => handleEditPerson(e, item.id)}
+          className="text-gray-600 hover:text-indigo-700 transition-all duration-300 ease-in-out"
+        >
           <MdFamilyRestroom className="cursor-pointer" size={22} />
         </button>
       </div>
-      <div
-        onClick={() => handleDelete(item.id)}
-        className="flex items-center justify-between space-x-4"
-      >
+      <div className="flex items-center justify-between space-x-4">
         <p className="text-indigo-600 text-lg font-bold flex items-center">
           <span>{item.finalPrice}</span>
           <FaEuroSign />
         </p>
-        <button className="text-red-500 hover:text-red-600 transition-all duration-300 ease-in-out">
+        <button
+          onClick={() => handleDelete(item.id)}
+          className="text-red-500 hover:text-red-600 transition-all duration-300 ease-in-out"
+        >
           <RiDeleteBin6Line className="cursor-pointer" size={22} />
         </button>
       </div>

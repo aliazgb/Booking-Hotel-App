@@ -1,16 +1,16 @@
 import React from "react";
 import ReactCountryFlag from "react-country-flag";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useBookMark } from "../../Context/BookMarkProvider";
 import { useReserve } from "../../Context/ReservProvider";
-import { useGeocode } from "../../hook/useGeoCode";
 import useUrlLocation from "../../hook/useUrlLocation";
 import { calculateFinalPrice } from "../../utils/utils";
 import Loader from "../Loader/Loader";
-import { useBookMark } from "../../Context/BookMarkProvider";
+import {useGeocode} from "../../hook/useGeocode"
 function AddNewBookmark() {
   const navigate = useNavigate();
   const [lat, lng] = useUrlLocation();
-  const {createBookmark}=useBookMark()
+  const { createBookmark } = useBookMark();
   const [searchParams, setSearchParams] = useSearchParams();
   const price = searchParams.get("price");
   const { option, setBookmarkedPlaces, date, setDate, setOpenDate } =
@@ -43,7 +43,7 @@ function AddNewBookmark() {
     if (differenceInDays == 0) {
       return setOpenDate(true);
     }
-    createBookmark(newBookmark)
+    createBookmark(newBookmark);
     setBookmarkedPlaces((prevKos) => [...prevKos, newBookmark]);
     setDate([
       {
