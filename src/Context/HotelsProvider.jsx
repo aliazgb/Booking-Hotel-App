@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useState } from "react";
-import useFetch from "../hook/useFetch";
-import { useSearchParams } from "react-router-dom";
 import axios from "axios";
+import React, { createContext, useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { useSearchParams } from "react-router-dom";
+import useFetch from "../hook/useFetch";
 const BASE_URL = "https://server-9-fixd.onrender.com/hotels/";
 const HotelsContext = createContext();
 function HotelsProvider({ children }) {
@@ -22,13 +22,15 @@ function HotelsProvider({ children }) {
       setDataHotel(data);
       setIsLoadingHotel(false);
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
       setIsLoadingHotel(true);
-    setDataHotel([])
-    }
+      setDataHotel([]);
+    } 
   }
   return (
-    <HotelsContext.Provider value={{ isLoading, hotels, dataHotel,getHotel,isLoadingHotel }}>
+    <HotelsContext.Provider
+      value={{ isLoading, hotels, dataHotel, getHotel, isLoadingHotel }}
+    >
       {children}
     </HotelsContext.Provider>
   );

@@ -17,9 +17,7 @@ function SingleHotel() {
   }, [id]);
   const handleBookmark = () => {
     setPrice(dataHotel.price);
-    navigate(
-      `/bookmark/add?lat=${lat}&lng=${lng}&price=${dataHotel.price}`
-    );
+    navigate(`/bookmark/add?lat=${lat}&lng=${lng}&price=${dataHotel.price}`);
   };
   const amenities = dataHotel.amenities || [];
   if (isLoadingHotel) {
@@ -29,7 +27,7 @@ function SingleHotel() {
   return (
     <div className="justify-between gap-3 items-stretch m-3">
       <div className="grid grid-cols-3 grid-rows-2 h-80 gap-3">
-        <div className="bg-amber-300 row-span-2 col-span-2">
+        <div className=" row-span-2 col-span-2">
           {" "}
           <img
             className="object-cover w-full h-full"
@@ -37,19 +35,19 @@ function SingleHotel() {
             alt={dataHotel.name}
           />
         </div>
-        <div className="bg-amber-900 row-span-1 col-span-1">
+        <div className=" row-span-1 col-span-1">
           {" "}
           <img
             className="w-full h-full object-cover"
-            src={dataHotel.xl_picture_url}
+            src={dataHotel?.extra_picture?.[0]}
             alt={dataHotel.name}
           />
         </div>
-        <div className=" bg-amber-100 row-span-1 col-span-1">
+        <div className="row-span-1 col-span-1">
           {" "}
           <img
             className="w-full h-full object-cover"
-            src={dataHotel.xl_picture_url}
+            src={dataHotel?.extra_picture?.[1]}
             alt={dataHotel.name}
           />
         </div>

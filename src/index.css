@@ -20,6 +20,15 @@
   .footer-text {
     @apply hover:text-white my-4 transition-all duration-300 ease-in-out;
   }
+  .form-container {
+    @apply bg-white/30 dark:bg-gray-300/50 backdrop-blur-lg p-6 rounded-2xl shadow-2xl sm:w-96 text-center;
+  }
+  .input-fieldd {
+    @apply w-full p-3 rounded-lg border-none outline-none bg-gray-400/40 shadow-inner text-gray-800;
+  }
+  .btn-secondaryy {
+    @apply bg-gray-500  hover:bg-gray-600 text-gray-200 text-sm sm:text-lg py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform;
+  }
 }
 
 :root {
@@ -37,4 +46,3 @@
   --primary-100: #e0e7ff;
   --rose-500: #f43f5e;
 }
-

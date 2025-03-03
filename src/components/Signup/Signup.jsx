@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useAuth } from "../../Context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { MdOutlineMail } from "react-icons/md";
+import { FiLock } from "react-icons/fi";
+import { FaRegUser } from "react-icons/fa";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -37,48 +40,66 @@ function Signup() {
   };
 
   return (
-    <div className="my-8 mx-auto max-w-[25rem] border border-blue-200 p-4 rounded-xl">
+    <div
+      className="my-8 mx-auto max-w-[25rem] p-4 rounded-xl
+      bg-gradient-to-br from-gray-300/30 to-gray-300 shadow-2xl"
+    >
       <h2 className="font-bold text-2xl text-center">Create Account!</h2>
       <form className="" onSubmit={handleCreate} autoComplete="off">
         <div className="relative mb-4">
           <label className="block mb-1" htmlFor="name">
             Name
           </label>
-          <input
-            className="input-field text-sm p-1.5"
-            type="text"
-            name="name"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <div className="relative">
+            <input
+              className="input-fieldd p-1.5 text-sm pl-10 pr-3"
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Enter your Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 border-r-2 border-gray-500 pr-1 ">
+              <FaRegUser />
+            </span>
+          </div>
         </div>
         <div className="relative mb-4">
           <label className="block mb-1" htmlFor="email">
             Email
           </label>
-          <input
-            className="input-field text-sm p-1.5"
-            type="text"
-            name="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <div className="relative">
+            <input
+              className="input-fieldd p-1.5 text-sm pl-10 pr-3"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 border-r-2 border-gray-500 pr-1 ">
+              <MdOutlineMail />
+            </span>
+          </div>
         </div>
         <div className="relative mb-4">
           <label className="block mb-1" htmlFor="password">
             Password
           </label>
           <input
-            autoComplete="new-password"
-            className="input-field text-sm p-1.5"
+            className="input-fieldd p-1.5 text-sm pl-10 pr-3"
             type="password"
             name="password"
-            id="password"
+            email="email"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <span className="absolute left-3 top-[73%] transform -translate-y-1/2 text-gray-500 border-r-2 border-gray-500 pr-1 ">
+            <FiLock />
+          </span>
         </div>
         <div className="flex items-center justify-between">
           <button className="btn-primary w-full py-1 mt-4">Create</button>

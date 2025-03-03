@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
+import { FaEuroSign } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { useReserve } from "../../Context/ReservProvider";
-import BookmarkActions from "../BookmarkActions/bookMarkActions";
-
+import BookmarkActions from "../BookmarkActions/BookmarkActions";
 function BookMarkList() {
   const [current, setCurrent] = useState();
   const [selectId, setSelectID] = useState(null);
@@ -103,63 +103,41 @@ function BookMarkList() {
   );
   return (
     <div className="w-full sm:w-[80%] m-2">
-      <h2 className="my-4 text-lg sm:text-xl">Bookmark List</h2>
-      <div>
-        <div className="mt-4">
-          {bookmarkedPlaces.map((item) => {
-            return (
-              <Link
-                key={item.id}
-                to={`/bookmark/?lat=${item.latitude}&lng=${item.longitude}`}
-              >
-                <div
-                  onClick={() => setCurrent(item.id)}
-                  className={`text-sm sm:text-lg mb-4 border border-gray-400 rounded-xl p-1 sm:p-4
-                    flex items-center justify-between
-                    ${
-                      current == item.id
-                        ? "border-2 border-indigo-600 bg-text-100"
-                        : ""
-                    }
-                    sm:flex-row sm:space-x-4`}
-                >
-                  <div className="mx-1">
-                    <ReactCountryFlag svg countryCode={item.countryCode} />
-                    &nbsp; <strong>{item.cityName}</strong> &nbsp;
-                    <span className="text-xs sm:text-lg">{item.country}</span>
-                  </div>
-                  <div>
-                    <span>For {item.differenceInDays} night</span>
-
-                    <span>
-                      {
-                        bookmarkedPlaces.find((f) => f.id == item.id)
-                          ?.finalPrice
-                      }{" "}
-                      &euro;
-                    </span>
-                  </div>
-                  <BookmarkActions
-                    handleEditPerson={handleEditPerson}
-                    handleEditDate={handleEditDate}
-                    handleDelete={handleDelete}
-                    item={item}
-                  />
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+      <h2 className="my-4 text-xl font-bold text-gray-900">Bookmark List</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {bookmarkedPlaces.map((item) => (
+          <Link
+            key={item.id}
+            to={`/bookmark/?lat=${item.latitude}&lng=${item.longitude}`}
+          >
+            <div
+              onClick={() => setCurrent(item.id)}
+              className={`p-4 rounded-2xl shadow-xl  bg-gray-300/50 backdrop-blur-lg flex
+              flex-col space-y-4 ${
+                current === item.id
+                  ? "border-2 border-indigo-500 shadow-2xl"
+                  : ""
+              }`}
+            >
+              <BookmarkActions
+                handleEditPerson={handleEditPerson}
+                handleEditDate={handleEditDate}
+                handleDelete={handleDelete}
+                item={item}
+              />
+            </div>
+          </Link>
+        ))}
       </div>
-      <div className="flex justify-between">
+      <div className="flex flex-col sm:flex-row justify-between items-center mt-6 p-4 rounded-lg">
         <button
-          className="btn-primary sm:py-2 sm:px-8 p-1 text-sm sm:text-lg"
           onClick={() => navigate("/hotels")}
+          className="btn-primary sm:py-2 sm:px-8 p-2 text-sm sm:text-lg"
         >
-          available hotels ...
+          Available hotels
         </button>
-        <div>
-          <span>TOTAL : {totalPrice}</span>
+        <div className="my-4 flex items-center text-sm sm:text-lg font-bold text-teal-600">
+          TOTAL: {totalPrice} <FaEuroSign className="inline" />
         </div>
       </div>
     </div>
