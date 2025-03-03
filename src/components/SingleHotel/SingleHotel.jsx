@@ -25,8 +25,8 @@ function SingleHotel() {
   }
 
   return (
-    <div className="justify-between gap-3 items-stretch m-3">
-      <div className="grid grid-cols-3 grid-rows-2 h-80 gap-3">
+    <div className="justify-between gap-3 items-st retch m-3">
+      <div className="grid grid-cols-3 grid-rows-2 h-28 sm:h-80 gap-3">
         <div className=" row-span-2 col-span-2">
           {" "}
           <img
