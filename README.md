@@ -1,6 +1,6 @@
 # Hotel Booking Platform 🌍  
 
-🚀 **Live Demo:** [Booking Hotel App](https://booking-hotel-app-gldp.vercel.app/)  
+🚀 **Live Demo:** [Booking Hotel App](https://booking-hotel-app-black.vercel.app/)  
 
 ## 🚀 Features  
 - **Interactive Map (Leaflet.js)** – Browse hotel locations easily on a map  
