@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useAuth } from "../../Context/AuthProvider";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { MdOutlineMail } from "react-icons/md";
-import { FiLock } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa";
+import { FiLock } from "react-icons/fi";
+import { MdOutlineMail } from "react-icons/md";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthProvider";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -35,18 +35,21 @@ function Signup() {
     toast.success("Account created successfully!");
 
     setTimeout(() => {
-      navigate("/login", { replace: true });
+      navigate("/login", {
+        replace: true,
+        state: { email, password },
+      });
     }, 1500);
   };
 
   return (
     <div
       className="my-8 mx-auto max-w-[25rem] p-4 rounded-xl
-      bg-gradient-to-br from-gray-300/30 to-gray-300 shadow-2xl"
+      bg-gradient-to-br from-gray-300/30 to-gray-300 shadow-2xl "
     >
       <h2 className="font-bold text-2xl text-center">Create Account!</h2>
       <form className="" onSubmit={handleCreate} autoComplete="off">
-        <div className="relative mb-4">
+        <div className="relative mb-4 ">
           <label className="block mb-1" htmlFor="name">
             Name
           </label>
@@ -105,6 +108,15 @@ function Signup() {
           <button className="btn-primary w-full py-1 mt-4">Create</button>
         </div>
       </form>
+      <p className="mt-8">
+        Already have an account?
+        <NavLink
+          to={"/login"}
+          className="text-indigo-600 hover:text-indigo-700 transition-all duration-300 ease-in-out mx-2"
+        >
+          Login here
+        </NavLink>
+      </p>
     </div>
   );
 }
