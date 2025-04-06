@@ -2,17 +2,12 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FiLock } from "react-icons/fi";
 import { MdOutlineMail } from "react-icons/md";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthProvider";
 
 function Login() {
-  const location = useLocation();
-  const initialEmail = location.state?.email || "";
-  const initialPassword = location.state?.password || "";
-  const fromSignup = Boolean(location.state?.email && location.state?.password);
-
-  const [email, setEmail] = useState(initialEmail);
-  const [password, setPassword] = useState(initialPassword);
+  const [email, setEmail] = useState("test.app@gmail.com");
+  const [password, setPassword] = useState("1234");
 
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -28,15 +23,9 @@ function Login() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      navigate("/"); 
     }
   }, [navigate, isAuthenticated]);
-
-  useEffect(() => {
-    if (fromSignup) {
-      toast.success("Account created successfully! Please log in.");
-    }
-  }, [fromSignup]);
 
   return (
     <div className="my-8 mx-auto max-w-[25rem] p-4 rounded-xl bg-gradient-to-br from-gray-300/30 to-gray-300 shadow-2xl">
@@ -82,7 +71,6 @@ function Login() {
           <button className="btn-primary w-full py-1 mt-4">Login</button>
         </div>
         <div className="relative mb-4 signup text-center flex items-center">
- 
         </div>
       </form>
     </div>

@@ -15,7 +15,6 @@ import Hotels from "./components/Hotels/Hotels";
 import LocationList from "./components/LocationList/LocationList";
 import Login from "./components/Login/Login";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import Signup from "./components/Signup/Signup";
 import SingleBookmark from "./components/SingleBookmark/SingleBookmark";
 import SingleHotel from "./components/SingleHotel/SingleHotel";
 function App() {
@@ -39,7 +38,6 @@ function App() {
               </Route>
               <Route path="/" element={<LocationList />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
               <Route
                 path="/hotels"
                 element={

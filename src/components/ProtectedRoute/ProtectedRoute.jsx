@@ -6,7 +6,7 @@ function ProtectedRoute({ children }) {
   const { isAuthenticated, createIsDone } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isAuthenticated) navigate("/signup", { replace: true });
+    if (!isAuthenticated) navigate("/login", { replace: true });
   }, [isAuthenticated, navigate]);
   return isAuthenticated ? children : null;
 }

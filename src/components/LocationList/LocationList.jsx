@@ -3,7 +3,7 @@ import useFetch from "../../hook/useFetch";
 import { MainLoader } from "../Loader/Loader";
 function LocationList() {
   const { data, isLoading } = useFetch(
-    "https://server-scdd.onrender.com/hotels",
+    "https://server-2cu8.onrender.com/hotels",
     ""
   );
 

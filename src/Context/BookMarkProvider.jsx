@@ -1,107 +1,104 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import useFetch from "../hook/useFetch";
-import { useSearchParams } from "react-router-dom";
-import { useReducer } from "react";
-import axios from "axios";
+import React, { createContext, useContext, useEffect, useReducer } from "react";
 import toast from "react-hot-toast";
+
+const LOCAL_STORAGE_KEY = "myBookmarks";
+
 const initialState = {
   isLoading: false,
   bookmarks: [],
   currentBookMark: null,
 };
-const BASE_URL = "https://server-scdd.onrender.com";
 
-function bookmarkReducer(state, actions) {
-  switch (actions.type) {
+function saveToLocalStorage(bookmarks) {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(bookmarks));
+}
+
+function loadFromLocalStorage() {
+  const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+  return stored ? JSON.parse(stored) : [];
+}
+
+function generateId() {
+  return Date.now(); 
+}
+
+function bookmarkReducer(state, action) {
+  switch (action.type) {
     case "loading":
-      return {
-        ...state,
-        isLoading: true,
-      };
+      return { ...state, isLoading: true };
+
+    case "bookmark/init":
+      return { ...state, isLoading: false, bookmarks: action.payload };
+
     case "currentBookMark/loaded":
-      return {
-        ...state,
-        isLoading: false,
-        currentBookMark: actions.payload,
-      };
-      case "currentBookMark/edit":
-        return {
-          ...state,
-          isLoading: false,
-          currentBookMark: actions.payload,
-          bookmarks: [...state.bookmarks, actions.payload],
-        };
+      return { ...state, isLoading: false, currentBookMark: action.payload };
+
     case "bookmark/loaded":
+      const newBookmarks = [...state.bookmarks, action.payload];
+      saveToLocalStorage(newBookmarks);
+      return { ...state, isLoading: false, bookmarks: newBookmarks };
+
+    case "currentBookMark/edit":
+      const edited = state.bookmarks.map((item) =>
+        item.id === action.payload.id ? action.payload : item
+      );
+      saveToLocalStorage(edited);
       return {
-        isLoading: false,
         ...state,
-        bookmarks: [...state.bookmarks, actions.payload],
+        isLoading: false,
+        currentBookMark: action.payload,
+        bookmarks: edited,
       };
+
     case "currentBookMark/delete":
-      return {
-        isLoading: false,
-        ...state,
-        bookmarks:state.bookmarks.filter((item)=>item.id!==actions.payload)
-      };
+      const filtered = state.bookmarks.filter((item) => item.id !== action.payload);
+      saveToLocalStorage(filtered);
+      return { ...state, isLoading: false, bookmarks: filtered };
+
     default:
-      throw new Error("unknown Action");
+      throw new Error("Unknown action type");
   }
 }
 
 const BookMarkContext = createContext();
+
 function BookMarkProviderList({ children }) {
   const [{ isLoading, bookmarks, currentBookMark }, dispatch] = useReducer(
     bookmarkReducer,
     initialState
   );
+
   useEffect(() => {
-    async function fetchBookmark(id) {
-      dispatch({ type: "loading" });
-      try {
-        const { data } = await axios.get(`${BASE_URL}/bookmarks/`);
-        dispatch({ type: "currentBookMark/loaded", payload: data });
-      } catch (error) {
-        toast.error(error.message);
-      }
-    }
-    fetchBookmark();
+    const localBookmarks = loadFromLocalStorage();
+    dispatch({ type: "bookmark/init", payload: localBookmarks });
   }, []);
-  async function getBookmark(id) {
+
+  function getBookmark(id) {
     dispatch({ type: "loading" });
-    try {
-      const { data } = await axios.get(`${BASE_URL}/bookmarks/${id}`);
-      dispatch({ type: "currentBookMark/loaded", payload: data });
-    } catch (error) {
-      toast.error(error.message);
+    const bookmark = bookmarks.find((item) => item.id === id);
+    if (bookmark) {
+      dispatch({ type: "currentBookMark/loaded", payload: bookmark });
+    } else {
+      toast.error("Bookmark not found");
     }
   }
-  async function createBookmark(newBookmark) {
+
+  function createBookmark(newBookmark) {
     dispatch({ type: "loading" });
-    try {
-      const { data } = await axios.post(`${BASE_URL}/bookmarks/`, newBookmark);
-      dispatch({ type: "currentBookMark/loaded", payload: data });
-      dispatch({ type: "bookmark/loaded", payload: data });
-    } catch (error) {}
+    const created = { ...newBookmark, id: generateId() };
+    dispatch({ type: "bookmark/loaded", payload: created });
+    dispatch({ type: "currentBookMark/loaded", payload: created });
   }
-  async function deleteBookmark(id) {
-    try {
-      await axios.delete(`${BASE_URL}/bookmarks/${id}`);
-      dispatch({ type: "currentBookMark/delete",payload:id });
-      // setBookmarks((prev) => prev.filter((item) => item.id !== id));
-    } catch (error) {
-      toast.error(error.message);
-    }
+
+  function deleteBookmark(id) {
+    dispatch({ type: "currentBookMark/delete", payload: id });
   }
-  async function editBookmark(id,data) {
-    try {
-      console.log(data)
-      await axios.put(`${BASE_URL}/bookmarks/${id}`);
-      dispatch({ type: "currentBookMark/edit",payload:data });
-      // setBookmarks((prev) => prev.filter((item) => item.id !== id));
-    } catch (error) {
-      toast.error(error.message);
-    }
+
+  function editBookmark(id, updatedData) {
+    const updated = { ...updatedData, id };
+    dispatch({ type: "currentBookMark/edit", payload: updated });
   }
+
   return (
     <BookMarkContext.Provider
       value={{
@@ -111,7 +108,7 @@ function BookMarkProviderList({ children }) {
         getBookmark,
         bookmarks,
         deleteBookmark,
-        editBookmark
+        editBookmark,
       }}
     >
       {children}
@@ -120,6 +117,7 @@ function BookMarkProviderList({ children }) {
 }
 
 export default BookMarkProviderList;
+
 export function useBookMark() {
   return useContext(BookMarkContext);
 }

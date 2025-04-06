@@ -1,17 +1,24 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const DateContext = createContext();
 
 export const DateProvider = ({ children }) => {
   const [openOption, setOpenOption] = useState(false);
-  const [bookmarkedPlaces, setBookmarkedPlaces] = useState(() => []);
+
+  const [bookmarkedPlaces, setBookmarkedPlaces] = useState(() => {
+    const stored = localStorage.getItem("bookmarkedPlaces");
+    return stored ? JSON.parse(stored) : [];
+  });
+
   const [openDate, setOpenDate] = useState();
   const [price, setPrice] = useState(0);
+
   const [option, setOption] = useState({
     adult: 1,
     children: 0,
     room: 1,
   });
+
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -19,6 +26,10 @@ export const DateProvider = ({ children }) => {
       key: "selection",
     },
   ]);
+
+  useEffect(() => {
+    localStorage.setItem("bookmarkedPlaces", JSON.stringify(bookmarkedPlaces));
+  }, [bookmarkedPlaces]);
 
   function getTotalBookingPrice(date, id) {
     const selectedHotel = date.find((f) => f.id == id);
