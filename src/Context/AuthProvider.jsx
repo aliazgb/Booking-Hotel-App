@@ -11,12 +11,11 @@ const initialState = {
 function authReducer(state, action) {
   switch (action.type) {
     case "login":
-      const user = { name: "Test User", email: "test.app@gmail.com" };
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(action.payload));
       localStorage.setItem("isAuthenticated", JSON.stringify(true));
       return {
         ...state,
-        user,
+        user: action.payload,
         isAuthenticated: true,
       };
 
@@ -38,11 +37,13 @@ export default function AuthContextProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   function login(email, password) {
-    if (email === "test.app@gmail.com" && password === "1234") {
-      toast.success("Welcome Test User");
-      dispatch({ type: "login" });
+    const emailDomain = email.split("@")[1];
+    if (emailDomain === "gmail.com" || emailDomain === "yahoo.com") {
+      const user = { name: "Test User", email };
+      toast.success(`Welcome ${user.name}`);
+      dispatch({ type: "login", payload: user });
     } else {
-      toast.error("Email or password is incorrect");
+      toast.error("Email must be a gmail.com or yahoo.com address");
     }
   }
 

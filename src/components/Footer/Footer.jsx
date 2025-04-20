@@ -5,7 +5,7 @@ import { SlSocialYoutube } from "react-icons/sl";
 import useFetch from "../../hook/useFetch";
 const Footer = () => {
   const { data, isLoading } = useFetch(
-    "https://server-2cu8.onrender.com/footer",
+    "https://server-xb4n.onrender.com/footer",
     ""
   );
 

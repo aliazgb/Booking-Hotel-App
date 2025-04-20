@@ -18,12 +18,19 @@ function Login() {
       toast.error("Please fill in all fields");
       return;
     }
+
+    const emailDomain = email.split("@")[1];
+    if (emailDomain !== "gmail.com" && emailDomain !== "yahoo.com") {
+      toast.error("Email must be a gmail.com or yahoo.com address");
+      return;
+    }
+
     login(email, password);
   };
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/"); 
+      navigate("/");
     }
   }, [navigate, isAuthenticated]);
 
@@ -32,9 +39,7 @@ function Login() {
       <h2 className="font-bold text-2xl text-center">Login</h2>
       <form className="form" onSubmit={handleLogin}>
         <div className="relative mb-4">
-          <label className="block mb-1" htmlFor="email">
-            Email
-          </label>
+          <label className="block mb-1" htmlFor="email">Email</label>
           <div className="relative">
             <input
               className="input-fieldd p-1.5 text-sm pl-10 pr-3"
@@ -50,10 +55,9 @@ function Login() {
             </span>
           </div>
         </div>
+
         <div className="relative mb-4">
-          <label className="block mb-1" htmlFor="password">
-            Password
-          </label>
+          <label className="block mb-1" htmlFor="password">Password</label>
           <input
             className="input-fieldd p-1.5 text-sm pl-10 pr-3"
             type="password"
@@ -67,10 +71,9 @@ function Login() {
             <FiLock />
           </span>
         </div>
+
         <div className="relative mb-4">
           <button className="btn-primary w-full py-1 mt-4">Login</button>
-        </div>
-        <div className="relative mb-4 signup text-center flex items-center">
         </div>
       </form>
     </div>
